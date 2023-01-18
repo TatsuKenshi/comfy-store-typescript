@@ -6,8 +6,9 @@ export const formatPrice = (number: number): number => {
   return Number(newNumber);
 };
 
+// rework getUniqueValues to work without sets
 export const getUniqueValues = (data: [], type: string): string[] => {
-  let unique = data.map((item) => item[type]);
+  let unique: string[] = data.map((item) => item[type]);
 
   if (type === "colors") {
     unique = unique.flat();

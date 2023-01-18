@@ -1,17 +1,17 @@
 import Router from "./router";
 import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/navbar";
-
-// navbar, sidebar, footer go here, above and below the router component
+import Sidebar from "./components/sidebar";
+import Footer from "./components/footer";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar />
-        {/* sidebar */}
+        <Sidebar />
         <Router />
-        {/* footer */}
+        <Footer />
       </BrowserRouter>
     </div>
   );
