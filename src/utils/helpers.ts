@@ -1,5 +1,3 @@
-// needs work
-
 export const formatPrice = (number: number): number => {
   const newNumber = Intl.NumberFormat("en-US", {
     style: "currency",
@@ -8,17 +6,17 @@ export const formatPrice = (number: number): number => {
   return Number(newNumber);
 };
 
-// export const getUniqueValues = (data, type) => {
-//   let unique = data.map((item) => item[type]);
+export const getUniqueValues = (data: [], type: string): string[] => {
+  let unique = data.map((item) => item[type]);
 
-//   if (type === "colors") {
-//     unique = unique.flat();
+  if (type === "colors") {
+    unique = unique.flat();
 
-//     return ["all", ...new Set(unique)];
-//   }
+    return ["all", ...new Set(unique)];
+  }
 
-//   return ["all", ...new Set(unique)].sort();
-// };
+  return ["all", ...new Set(unique)].sort();
+};
 
 export const capitalizeTitle = (title: string): string => {
   const array = title.split(" ");
