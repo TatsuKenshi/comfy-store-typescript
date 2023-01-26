@@ -3,6 +3,7 @@ import ContactSection from "../../components/contact";
 import FeaturedProducts from "../../components/featured-products";
 import HomeHero from "../../components/home-hero";
 import Mission from "../../components/mission";
+import "./index.scss";
 
 const Home = () => {
   return (
