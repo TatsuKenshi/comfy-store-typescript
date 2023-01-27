@@ -6,41 +6,29 @@ import Sidebar from "./components/sidebar";
 import Footer from "./components/footer";
 import axios from "axios";
 import { products_url as url } from "./utils/constants";
-import { addAllProducts, getAllProducts } from "./app/reducers/productsSlice";
+import { fetchAllProducts, getAllProducts } from "./app/reducers/productsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "./app/store";
 
 function App() {
   let fetchRef = useRef(true);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const prods = useSelector(getAllProducts);
-
-  const fetchProducts = useCallback(
-    async (url: string) => {
-      try {
-        const response = await axios.get(url);
-        const products = response.data;
-        dispatch(addAllProducts(products));
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [dispatch]
-  );
 
   useEffect(() => {
     if (fetchRef.current) {
-      fetchProducts(url);
+      dispatch(fetchAllProducts(url));
       fetchRef.current = false;
     }
-  }, [fetchProducts]);
+  }, [dispatch]);
 
   return (
     <div className="App">
       <BrowserRouter>
-        {/* {prods.map((prod: {}, index: number) => {
-          return <span key={index}>{index}</span>;
-        })} */}
         <Navbar />
+        {prods.map((prod: {}, index: number) => {
+          return <span key={index}>{index}</span>;
+        })}
         <Sidebar />
         <Router />
         <Footer />
