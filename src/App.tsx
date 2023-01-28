@@ -1,10 +1,9 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import Router from "./router";
 import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Sidebar from "./components/sidebar";
 import Footer from "./components/footer";
-import axios from "axios";
 import { products_url as url } from "./utils/constants";
 import { fetchAllProducts, getAllProducts } from "./app/reducers/productsSlice";
 import { useDispatch, useSelector } from "react-redux";

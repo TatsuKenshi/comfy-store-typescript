@@ -3,11 +3,13 @@ import { FaBars } from "react-icons/fa";
 import logo from "../../assets/logo.svg";
 import { links } from "../../utils/constants";
 import CartButtons from "../cart-buttons/index";
-
-// import { useProductsContext} from "../../context/products_context/ProductsContext"
-// import {useUserContext} from "../../context/user_context/UserContext"
+import { sideBarOpen } from "../../app/reducers/productsSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../app/store";
 
 const Navbar = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
     <nav
       style={{
@@ -50,7 +52,11 @@ const Navbar = () => {
       </div>
 
       <div>
-        <button style={{ border: "none", background: "none" }}>
+        <button
+          style={{ border: "none", background: "none" }}
+          // send payload with each dispatch
+          onClick={() => dispatch(sideBarOpen(true))}
+        >
           <FaBars style={{ color: "brown", width: "20px", height: "20px" }} />
         </button>
       </div>

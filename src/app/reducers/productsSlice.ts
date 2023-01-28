@@ -5,18 +5,25 @@ import { RootStateType } from "../store";
 export const fetchAllProducts = createAsyncThunk(
   "movies/fetchAsyncMovies",
 
-  async (url: string): Promise<any> => {
+  // promise has to have a type
+  async (url: string): Promise<[]> => {
     const response = await axios.get(url);
     return response.data;
   }
 );
+
+// type for filtering featured products
+type ProductType = {
+  featured?: boolean;
+};
 
 type InitialState = {
   isSidebarOpen: boolean;
   products_loading: boolean;
   products_error: boolean;
   products: [];
-  featured_products: [];
+  // the featured_products array is made up of ProductType items
+  featured_products: ProductType[];
   single_product_loading: boolean;
   single_product_error: boolean;
   single_product: {};
@@ -35,38 +42,55 @@ const initialState: InitialState = {
   similar_products: [],
 };
 
-interface ProductsSliceTypes {
-  name: string;
-  initialState: {};
-  reducers: {};
-  extraReducers?: any;
-}
-
 const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    addAllProducts: (state, { payload }) => {
-      state.products = payload;
+    // inspect this one
+    // regular reducers have to have state and (maybe?) action ( or {payload}) args
+    // set states to payloads
+    sideBarOpen(state, { payload }) {
+      state.isSidebarOpen = payload;
+    },
+    sideBarClose(state, { payload }) {
+      state.isSidebarOpen = payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAllProducts.pending, () => {
+    builder.addCase(fetchAllProducts.pending, (state) => {
       console.log("pending");
+      return { ...state, products_loading: true };
     });
 
     builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
       console.log("success");
-      return { ...state, products: action.payload };
+      // featured_ones is an array of ProductType items
+      // every product is a ProductType item
+      const featured_ones: ProductType[] = action.payload.filter(
+        (product: ProductType) => {
+          return product.featured === true;
+        }
+      );
+      return {
+        ...state,
+        products_loading: false,
+        products: action.payload,
+        featured_products: featured_ones,
+      };
     });
 
-    builder.addCase(fetchAllProducts.rejected, () => {
+    builder.addCase(fetchAllProducts.rejected, (state) => {
       console.log("rejected");
+      return {
+        ...state,
+        single_product_loading: false,
+        single_product_error: true,
+      };
     });
   },
 });
 
-export const { addAllProducts } = productsSlice.actions;
+export const { sideBarOpen, sideBarClose } = productsSlice.actions;
 export const getAllProducts = (state: RootStateType) => state.products.products;
 export const getSidebarStatus = (state: RootStateType) =>
   state.products.isSidebarOpen;
