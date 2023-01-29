@@ -3,7 +3,7 @@ import axios from "axios";
 import { RootStateType } from "../store";
 
 export const fetchAllProducts = createAsyncThunk(
-  "movies/fetchAsyncMovies",
+  "products/fetchAllProducts",
 
   // promise has to have a type
   async (url: string): Promise<[]> => {
@@ -15,6 +15,7 @@ export const fetchAllProducts = createAsyncThunk(
 // type for filtering featured products
 type ProductType = {
   featured?: boolean;
+  category: string;
 };
 
 type InitialState = {
@@ -28,6 +29,22 @@ type InitialState = {
   single_product_error: boolean;
   single_product: {};
   similar_products: [];
+
+  // states from the filterSlice types
+  filtered_products: [];
+  all_products: [];
+  grid_view: boolean;
+  sort: string;
+  filters: {
+    text: string;
+    company: string;
+    category: string;
+    color: string;
+    min_price: number;
+    max_price: number;
+    price: number;
+    shipping: boolean;
+  };
 };
 
 const initialState: InitialState = {
@@ -40,6 +57,22 @@ const initialState: InitialState = {
   single_product_error: false,
   single_product: {},
   similar_products: [],
+
+  // states from the filterSlice initial states
+  filtered_products: [],
+  all_products: [],
+  grid_view: true,
+  sort: "price-lowest",
+  filters: {
+    text: "",
+    company: "all",
+    category: "all",
+    color: "all",
+    min_price: 0,
+    max_price: 0,
+    price: 0,
+    shipping: false,
+  },
 };
 
 const productsSlice = createSlice({
@@ -55,6 +88,8 @@ const productsSlice = createSlice({
     sideBarClose(state, { payload }) {
       state.isSidebarOpen = payload;
     },
+
+    // reducers for the filterSlice states
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAllProducts.pending, (state) => {
@@ -88,6 +123,8 @@ const productsSlice = createSlice({
       };
     });
   },
+
+  // extraReducers for the filterSlice states
 });
 
 export const { sideBarOpen, sideBarClose } = productsSlice.actions;
