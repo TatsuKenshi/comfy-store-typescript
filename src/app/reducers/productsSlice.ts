@@ -32,7 +32,7 @@ type InitialState = {
 
   // states from the filterSlice types
   filtered_products: [];
-  all_products: [];
+  // all_products: [];
   grid_view: boolean;
   sort: string;
   filters: {
@@ -60,7 +60,7 @@ const initialState: InitialState = {
 
   // states from the filterSlice initial states
   filtered_products: [],
-  all_products: [],
+  // all_products: [],
   grid_view: true,
   sort: "price-lowest",
   filters: {
@@ -90,6 +90,13 @@ const productsSlice = createSlice({
     },
 
     // reducers for the filterSlice states
+    setGridView(state, { payload }) {
+      state.grid_view = payload;
+    },
+
+    setListView(state, { payload }) {
+      state.grid_view = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAllProducts.pending, (state) => {
@@ -111,16 +118,13 @@ const productsSlice = createSlice({
         products_loading: false,
         products: action.payload,
         featured_products: featured_ones,
+        filtered_products: action.payload,
       };
     });
 
     builder.addCase(fetchAllProducts.rejected, (state) => {
       console.log("rejected");
-      return {
-        ...state,
-        single_product_loading: false,
-        single_product_error: true,
-      };
+      return { ...state, products_loading: false, products_error: true };
     });
   },
 
@@ -129,7 +133,10 @@ const productsSlice = createSlice({
 
 export const { sideBarOpen, sideBarClose } = productsSlice.actions;
 export const getAllProducts = (state: RootStateType) => state.products.products;
+export const getFilteredProducts = (state: RootStateType) =>
+  state.products.filtered_products;
 export const getSidebarStatus = (state: RootStateType) =>
   state.products.isSidebarOpen;
+export const getGridView = (state: RootStateType) => state.products.grid_view;
 
 export default productsSlice.reducer;
