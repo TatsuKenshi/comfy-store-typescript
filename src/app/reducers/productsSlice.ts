@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootStateType } from "../store";
+import { ProductsInitialStateType, ProductType } from "../types";
 
 export const fetchAllProducts = createAsyncThunk(
   "products/fetchAllProducts",
@@ -12,42 +13,7 @@ export const fetchAllProducts = createAsyncThunk(
   }
 );
 
-// type for filtering featured products
-type ProductType = {
-  featured?: boolean;
-  category: string;
-};
-
-type InitialState = {
-  isSidebarOpen: boolean;
-  products_loading: boolean;
-  products_error: boolean;
-  products: [];
-  // the featured_products array is made up of ProductType items
-  featured_products: ProductType[];
-  single_product_loading: boolean;
-  single_product_error: boolean;
-  single_product: {};
-  similar_products: [];
-
-  // states from the filterSlice types
-  filtered_products: [];
-  // all_products: [];
-  grid_view: boolean;
-  sort: string;
-  filters: {
-    text: string;
-    company: string;
-    category: string;
-    color: string;
-    min_price: number;
-    max_price: number;
-    price: number;
-    shipping: boolean;
-  };
-};
-
-const initialState: InitialState = {
+const initialState: ProductsInitialStateType = {
   isSidebarOpen: false,
   products_loading: false,
   products_error: false,
