@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import ErrorPage from "../pages/error";
 import routes from "./config";
 
 // routes go into this file
@@ -28,6 +29,7 @@ const Router = () => {
               </PrivateRoute>
             }
           /> */}
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };
