@@ -1,8 +1,12 @@
 import React from "react";
+import { PageHeroTypes } from "../types";
 
-// correct the prop type here
-const PageHero = (title: string | any) => {
-  return <div>PageHero</div>;
+const PageHero = (props: PageHeroTypes) => {
+  return (
+    <div>
+      <div>Home / {props.title}</div>
+    </div>
+  );
 };
 
 export default PageHero;
