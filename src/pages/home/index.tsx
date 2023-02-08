@@ -8,7 +8,6 @@ import "./index.scss";
 const Home = () => {
   return (
     <div>
-      This is the home page.
       <HomeHero />
       <FeaturedProducts />
       <Mission />
