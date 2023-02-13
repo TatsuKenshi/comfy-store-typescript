@@ -4,6 +4,7 @@ const Home = React.lazy(() => import("../pages/home/index"));
 const About = React.lazy(() => import("../pages/about/index"));
 const Checkout = React.lazy(() => import("../pages/checkout/index"));
 const Products = React.lazy(() => import("../pages/products/index"));
+const Contact = React.lazy(() => import("../pages/contact/index"));
 
 const routes = [
   {
@@ -29,6 +30,12 @@ const routes = [
     path: "products",
     folder: "products",
     element: Products,
+  },
+  {
+    id: 4,
+    path: "contact",
+    folder: "contact",
+    element: Contact,
   },
 ];
 

@@ -99,6 +99,8 @@ const productsSlice = createSlice({
 
 export const { sideBarOpen, sideBarClose } = productsSlice.actions;
 export const getAllProducts = (state: RootStateType) => state.products.products;
+export const getFeaturedProducts = (state: RootStateType) =>
+  state.products.featured_products;
 export const getFilteredProducts = (state: RootStateType) =>
   state.products.filtered_products;
 export const getSidebarStatus = (state: RootStateType) =>

@@ -1,7 +1,17 @@
-import React from "react";
+import { getFeaturedProducts } from "../../app/reducers/productsSlice";
+import { useSelector } from "react-redux";
 
 const FeaturedProducts = () => {
-  return <div>FeaturedProducts</div>;
+  const prods = useSelector(getFeaturedProducts);
+
+  return (
+    <div>
+      FeaturedProducts
+      {prods.map((prod: {}, index: number) => {
+        return <span key={index}>{index}</span>;
+      })}
+    </div>
+  );
 };
 
 export default FeaturedProducts;

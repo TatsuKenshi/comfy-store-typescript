@@ -1,18 +1,17 @@
-import React from "react";
-import ContactSection from "../../components/contact";
-import FeaturedProducts from "../../components/featured-products";
 import HomeHero from "../../components/home-hero";
+import FeaturedProducts from "../../components/featured-products";
 import Mission from "../../components/mission";
+import ContactSection from "../../components/contact";
 import "./index.scss";
 
 const Home = () => {
   return (
-    <div>
+    <main>
       <HomeHero />
       <FeaturedProducts />
       <Mission />
       <ContactSection />
-    </div>
+    </main>
   );
 };
 
