@@ -1,16 +1,40 @@
 import "./index.scss";
-import { getAllProducts } from "../../app/reducers/productsSlice";
+import {
+  getAllProducts,
+  getAllProductsLoading,
+  getAllProductsError,
+} from "../../app/reducers/productsSlice";
 import { useSelector } from "react-redux";
+import Product from "../../components/product";
+import { ProductType } from "../../app/types";
 
 const Products = () => {
-  const prods = useSelector(getAllProducts);
+  const products = useSelector(getAllProducts);
+  const productsLoading = useSelector(getAllProductsLoading);
+  const productsError = useSelector(getAllProductsError);
+
+  if (productsLoading) {
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
+
+  if (productsError) {
+    return (
+      <div>
+        <h1>There was an error...</h1>
+      </div>
+    );
+  }
 
   return (
     <div>
-      Products
+      <h1>Products</h1>
       <div>
-        {prods.map((prod: {}, index: number) => {
-          return <span key={index}>{index}</span>;
+        {products.map((product: ProductType) => {
+          return <Product {...product} key={product.id} />;
         })}
       </div>
     </div>

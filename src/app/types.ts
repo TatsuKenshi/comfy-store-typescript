@@ -2,6 +2,10 @@
 export type ProductType = {
   featured?: boolean;
   category: string;
+  id: string;
+  name: string;
+  price: number;
+  image: string;
 };
 
 export type ProductsInitialStateType = {

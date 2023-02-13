@@ -26,7 +26,6 @@ const initialState: ProductsInitialStateType = {
 
   // states from the filterSlice initial states
   filtered_products: [],
-  // all_products: [],
   grid_view: true,
   sort: "price-lowest",
   filters: {
@@ -65,13 +64,12 @@ const productsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // fetch all products extra reducers
     builder.addCase(fetchAllProducts.pending, (state) => {
-      console.log("pending");
       return { ...state, products_loading: true };
     });
 
     builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
-      console.log("success");
       // featured_ones is an array of ProductType items
       // every product is a ProductType item
       const featured_ones: ProductType[] = action.payload.filter(
@@ -89,7 +87,6 @@ const productsSlice = createSlice({
     });
 
     builder.addCase(fetchAllProducts.rejected, (state) => {
-      console.log("rejected");
       return { ...state, products_loading: false, products_error: true };
     });
   },
@@ -97,14 +94,31 @@ const productsSlice = createSlice({
   // extraReducers for the filterSlice states
 });
 
+// products slice actions
 export const { sideBarOpen, sideBarClose } = productsSlice.actions;
+
+// products slice getters
+
+// all products getters
 export const getAllProducts = (state: RootStateType) => state.products.products;
+export const getAllProductsLoading = (state: RootStateType) =>
+  state.products.products_loading;
+export const getAllProductsError = (state: RootStateType) =>
+  state.products.products_error;
+
+// featured products getters
 export const getFeaturedProducts = (state: RootStateType) =>
   state.products.featured_products;
+
+// filtered products getters
 export const getFilteredProducts = (state: RootStateType) =>
   state.products.filtered_products;
+
+// sidebar getters
 export const getSidebarStatus = (state: RootStateType) =>
   state.products.isSidebarOpen;
+
+// grid and list view getters
 export const getGridView = (state: RootStateType) => state.products.grid_view;
 
 export default productsSlice.reducer;
