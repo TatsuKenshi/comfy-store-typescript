@@ -1,9 +1,9 @@
-export const formatPrice = (number: number): number => {
+export const formatPrice = (number: number): string => {
   const newNumber = Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(number / 100);
-  return Number(newNumber);
+  return newNumber;
 };
 
 // rework getUniqueValues to work without sets
