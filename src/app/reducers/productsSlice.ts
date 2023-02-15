@@ -13,6 +13,16 @@ export const fetchAllProducts = createAsyncThunk(
   }
 );
 
+export const fetchSingleProduct = createAsyncThunk(
+  "products/fetchSingleProduct",
+
+  // promise has to have a type
+  async (url: string): Promise<{}> => {
+    const response = await axios.get(url);
+    return response.data;
+  }
+);
+
 const initialState: ProductsInitialStateType = {
   isSidebarOpen: false,
   products_loading: false,
@@ -89,9 +99,32 @@ const productsSlice = createSlice({
     builder.addCase(fetchAllProducts.rejected, (state) => {
       return { ...state, products_loading: false, products_error: true };
     });
-  },
 
-  // extraReducers for the filterSlice states
+    // fetch single product extra reducers
+    builder.addCase(fetchSingleProduct.pending, (state) => {
+      return { ...state, single_product_loading: true };
+    });
+
+    builder.addCase(fetchSingleProduct.fulfilled, (state, action) => {
+      // get similar products
+
+      return {
+        ...state,
+        single_product_loading: false,
+        single_product: action.payload,
+      };
+    });
+
+    builder.addCase(fetchSingleProduct.rejected, (state) => {
+      return {
+        ...state,
+        single_product_loading: false,
+        single_product_error: true,
+      };
+    });
+
+    // extraReducers for the filterSlice states
+  },
 });
 
 // products slice actions
@@ -105,6 +138,14 @@ export const getAllProductsLoading = (state: RootStateType) =>
   state.products.products_loading;
 export const getAllProductsError = (state: RootStateType) =>
   state.products.products_error;
+
+// single product getters
+export const getSingleProduct = (state: RootStateType) =>
+  state.products.single_product;
+export const getSingleProductLoading = (state: RootStateType) =>
+  state.products.single_product_loading;
+export const getSingleProductError = (state: RootStateType) =>
+  state.products.single_product_error;
 
 // featured products getters
 export const getFeaturedProducts = (state: RootStateType) =>
