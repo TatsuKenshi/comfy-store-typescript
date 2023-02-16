@@ -5,20 +5,42 @@ export type ProductType = {
   id: string;
   name: string;
   price: number;
-  image: string;
+  image?: string;
+  description?: string;
+  stock?: number;
+  stars?: number;
+  reviews?: number;
+  company?: string;
+  colors?: [];
+  images?: [];
+};
+
+export type SingleProductType = {
+  featured?: boolean;
+  category: string;
+  name: string;
+  price: number;
+  description: string;
+  stock: number;
+  stars: number;
+  reviews: number;
+  id: string;
+  company: string;
+  colors: [];
+  images: [];
 };
 
 export type ProductsInitialStateType = {
   isSidebarOpen: boolean;
   products_loading: boolean;
   products_error: boolean;
-  products: [];
+  products: ProductType[];
   // the featured_products array is made up of ProductType items
   featured_products: ProductType[];
   single_product_loading: boolean;
   single_product_error: boolean;
-  single_product: {};
-  similar_products: [];
+  single_product: SingleProductType | {};
+  similar_products: ProductType[];
 
   // states from the filterSlice types
   filtered_products: [];
