@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootStateType } from "../store";
 import {
@@ -21,7 +21,7 @@ export const fetchSingleProduct = createAsyncThunk(
   "products/fetchSingleProduct",
 
   // promise has to have a type
-  async (url: string): Promise<{}> => {
+  async (url: string): Promise<SingleProductType> => {
     const response = await axios.get(url);
     return response.data;
   }
@@ -112,16 +112,23 @@ const productsSlice = createSlice({
     builder.addCase(fetchSingleProduct.fulfilled, (state, action) => {
       // get similar products
 
-      // const allCategoryItems: ProductType[] = state.products.filter(
-      //   (product: ProductType) => {
-      //     return product.category === action.payload.category;
-      //   }
-      // );
+      const allCategoryItems: ProductType[] = state.products.filter(
+        (product: ProductType) => {
+          return product.category === action.payload.category;
+        }
+      );
+
+      const similarItems: ProductType[] = allCategoryItems.filter(
+        (item: ProductType) => {
+          return item.name !== action.payload.name;
+        }
+      );
 
       return {
         ...state,
         single_product_loading: false,
         single_product: action.payload,
+        similar_products: similarItems,
       };
     });
 
