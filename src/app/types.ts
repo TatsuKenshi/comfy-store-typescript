@@ -5,14 +5,7 @@ export type ProductType = {
   id: string;
   name: string;
   price: number;
-  image?: string;
-  description?: string;
-  stock?: number;
-  stars?: number;
-  reviews?: number;
-  company?: string;
-  colors?: [];
-  images?: [];
+  image: string;
 };
 
 export type SingleProductType = {
@@ -44,7 +37,6 @@ export type ProductsInitialStateType = {
 
   // states from the filterSlice types
   filtered_products: [];
-  // all_products: [];
   grid_view: boolean;
   sort: string;
   filters: {

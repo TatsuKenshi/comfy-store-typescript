@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootStateType } from "../store";
 import {
@@ -111,7 +111,6 @@ const productsSlice = createSlice({
 
     builder.addCase(fetchSingleProduct.fulfilled, (state, action) => {
       // get similar products
-
       const allCategoryItems: ProductType[] = state.products.filter(
         (product: ProductType) => {
           return product.category === action.payload.category;
