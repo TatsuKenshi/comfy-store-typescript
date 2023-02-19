@@ -163,7 +163,11 @@ export const getSingleProductLoading = (state: RootStateType) =>
 export const getSingleProductError = (state: RootStateType) =>
   state.products.single_product_error;
 
-// featured products getters
+// similar products getter
+export const getSimilarProducts = (state: RootStateType) =>
+  state.products.similar_products;
+
+// featured products getter
 export const getFeaturedProducts = (state: RootStateType) =>
   state.products.featured_products;
 

@@ -17,7 +17,7 @@ import PageHero from "../../components/page-hero";
 // import ProductImages from "../../components/product-images";
 // import AddToCart from "../../components/add-to-cart";
 // import Stars from "../../components/stars";
-// import SimilarProducts from "../../components/similar-products";
+import SimilarProducts from "../../components/similar-products";
 import "./index.scss";
 
 const Singleproduct = () => {
@@ -48,7 +48,12 @@ const Singleproduct = () => {
 
   // regular return
 
-  return <div>Singleproduct {params.id}</div>;
+  return (
+    <>
+      <div>Singleproduct {params.id}</div>
+      <SimilarProducts />
+    </>
+  );
 };
 
 export default Singleproduct;
