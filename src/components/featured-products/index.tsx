@@ -1,6 +1,6 @@
 import Product from "../product";
 import Loading from "../loading";
-import Error from "../error";
+import ErrorComponent from "../error";
 import {
   getFeaturedProducts,
   getAllProductsLoading,
@@ -19,7 +19,7 @@ const FeaturedProducts = () => {
   }
 
   if (productsError) {
-    return <Error />;
+    return <ErrorComponent />;
   }
 
   return (

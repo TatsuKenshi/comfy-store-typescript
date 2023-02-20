@@ -32,7 +32,7 @@ const Singleproduct = () => {
   const productLoading = useSelector(getSingleProductLoading);
   const productError = useSelector(getSingleProductError);
 
-  // fetching useEffect
+  // fetch single product useEffect
   useEffect(() => {
     if (fetchRef.current) {
       dispatch(fetchSingleProduct(`${url}${params.id}`));
@@ -43,11 +43,16 @@ const Singleproduct = () => {
   console.log(product);
 
   // loading return
+  if (productLoading) {
+    return <Loading />;
+  }
 
   // error return
+  if (productError) {
+    return <ErrorComponent />;
+  }
 
   // regular return
-
   return (
     <>
       <div>Singleproduct {params.id}</div>
