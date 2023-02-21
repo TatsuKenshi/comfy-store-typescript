@@ -21,6 +21,7 @@ export type SingleProductType = {
   company: string;
   colors: [];
   images: [];
+  shipping: boolean;
 };
 
 export type ProductsInitialStateType = {
@@ -32,7 +33,7 @@ export type ProductsInitialStateType = {
   featured_products: ProductType[];
   single_product_loading: boolean;
   single_product_error: boolean;
-  single_product: SingleProductType | {};
+  single_product: SingleProductType;
   similar_products: ProductType[];
 
   // states from the filterSlice types

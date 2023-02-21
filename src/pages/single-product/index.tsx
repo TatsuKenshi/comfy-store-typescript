@@ -10,13 +10,13 @@ import {
 } from "../../app/reducers/productsSlice";
 import { single_product_url as url } from "../../utils/constants";
 import { capitalizeTitle, formatPrice } from "../../utils/helpers";
-import { ProductType } from "../../app/types";
+import { ProductType, SingleProductType } from "../../app/types";
 import Loading from "../../components/loading";
 import ErrorComponent from "../../components/error";
 import PageHero from "../../components/page-hero";
-// import ProductImages from "../../components/product-images";
-// import AddToCart from "../../components/add-to-cart";
-// import Stars from "../../components/stars";
+import ProductImages from "../../components/product-images";
+import AddToCart from "../../components/add-to-cart";
+import Stars from "../../components/stars";
 import SimilarProducts from "../../components/similar-products";
 import "./index.scss";
 
@@ -29,6 +29,8 @@ const Singleproduct = () => {
 
   // slice getters for the single product, loading, and error states
   const product = useSelector(getSingleProduct);
+  console.log(product);
+
   const productLoading = useSelector(getSingleProductLoading);
   const productError = useSelector(getSingleProductError);
 
@@ -39,8 +41,6 @@ const Singleproduct = () => {
       fetchRef.current = false;
     }
   }, [dispatch, params.id]);
-
-  console.log(product);
 
   // loading return
   if (productLoading) {
@@ -55,7 +55,9 @@ const Singleproduct = () => {
   // regular return
   return (
     <>
+      <PageHero title={product.name} />
       <div>Singleproduct {params.id}</div>
+      <h1>This is the single product</h1>
       <SimilarProducts />
     </>
   );

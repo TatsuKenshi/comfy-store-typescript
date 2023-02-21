@@ -35,7 +35,21 @@ const initialState: ProductsInitialStateType = {
   featured_products: [],
   single_product_loading: false,
   single_product_error: false,
-  single_product: {},
+  single_product: {
+    featured: false,
+    category: "",
+    name: "",
+    price: 0,
+    description: "",
+    stock: 0,
+    stars: 0,
+    reviews: 0,
+    id: "",
+    company: "",
+    colors: [],
+    images: [],
+    shipping: false,
+  },
   similar_products: [],
 
   // states from the filterSlice initial states
