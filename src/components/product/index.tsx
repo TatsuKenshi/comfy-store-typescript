@@ -11,7 +11,9 @@ const Product = (product: ProductType) => {
       <div className="container">
         <img src={image} alt={name} />
         <Link to={`/products/${id}`} className="link">
-          <FaSearch />
+          <div>
+            <FaSearch />
+          </div>
         </Link>
       </div>
       <footer>

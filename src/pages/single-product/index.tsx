@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../app/store";
@@ -20,12 +20,11 @@ import AddToCart from "../../components/add-to-cart";
 import SimilarProducts from "../../components/similar-products";
 import "./index.scss";
 
-const Singleproduct = () => {
-  // fetch ref, action dispatch, navigation, url param variables
-  let fetchRef = useRef(true);
+const SingleProduct = () => {
+  // action dispatch, navigation, url param variables
   const dispatch = useDispatch<AppDispatch>();
   let navigate = useNavigate();
-  const { id } = useParams();
+  const params = useParams();
 
   // slice getters for single product, loading, and error states
   const product = useSelector(getSingleProduct);
@@ -34,11 +33,8 @@ const Singleproduct = () => {
 
   // fetch single product useEffect
   useEffect(() => {
-    if (fetchRef.current) {
-      dispatch(fetchSingleProduct(`a${url}${id}`));
-      fetchRef.current = false;
-    }
-  }, [dispatch, id]);
+    dispatch(fetchSingleProduct(`${url}${params.id}`));
+  }, [dispatch, params.id]);
 
   // error redirection useEffect
   useEffect(() => {
@@ -73,15 +69,14 @@ const Singleproduct = () => {
 
   // regular return
   return (
-    <>
+    <section>
       <PageHero title={name} product="products" />
-      <div>Singleproduct {id}</div>
       <ProductImages />
       <Stars />
       <AddToCart />
       <SimilarProducts />
-    </>
+    </section>
   );
 };
 
-export default Singleproduct;
+export default SingleProduct;
