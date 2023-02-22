@@ -15,13 +15,13 @@ import Loading from "../../components/loading";
 import ErrorComponent from "../../components/error";
 import PageHero from "../../components/page-hero";
 import ProductImages from "../../components/product-images";
-import AddToCart from "../../components/add-to-cart";
 import Stars from "../../components/stars";
+import AddToCart from "../../components/add-to-cart";
 import SimilarProducts from "../../components/similar-products";
 import "./index.scss";
 
 const Singleproduct = () => {
-  // fetching, action dispatch, url param, and navigation variables
+  // fetching, action dispatch, url param, navigation variables
   let fetchRef = useRef(true);
   const dispatch = useDispatch<AppDispatch>();
   const params = useParams();
@@ -52,12 +52,26 @@ const Singleproduct = () => {
     return <ErrorComponent />;
   }
 
+  const {
+    name,
+    price,
+    description,
+    stock,
+    stars,
+    reviews,
+    id: sku,
+    company,
+    images,
+  } = product;
+
   // regular return
   return (
     <>
-      <PageHero title={product.name} />
+      <PageHero title={name} product="products" />
       <div>Singleproduct {params.id}</div>
-      <h1>This is the single product</h1>
+      <ProductImages />
+      <Stars />
+      <AddToCart />
       <SimilarProducts />
     </>
   );

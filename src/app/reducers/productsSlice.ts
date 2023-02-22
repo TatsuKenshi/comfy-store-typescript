@@ -10,7 +10,7 @@ import {
 export const fetchAllProducts = createAsyncThunk(
   "products/fetchAllProducts",
 
-  // promise has to have a type
+  // promise has to have a return type
   async (url: string): Promise<[]> => {
     const response = await axios.get(url);
     return response.data;
@@ -20,7 +20,7 @@ export const fetchAllProducts = createAsyncThunk(
 export const fetchSingleProduct = createAsyncThunk(
   "products/fetchSingleProduct",
 
-  // promise has to have a type
+  // promise has to have a return type
   async (url: string): Promise<SingleProductType> => {
     const response = await axios.get(url);
     return response.data;
@@ -92,14 +92,15 @@ const productsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // // // // //
     // fetch all products extra reducers
+    // // // // //
     builder.addCase(fetchAllProducts.pending, (state) => {
       return { ...state, products_loading: true };
     });
 
     builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
       // featured_ones is an array of ProductType items
-      // every product is a ProductType item
       const featured_ones: ProductType[] = action.payload.filter(
         (product: ProductType) => {
           return product.featured === true;
@@ -117,14 +118,16 @@ const productsSlice = createSlice({
     builder.addCase(fetchAllProducts.rejected, (state) => {
       return { ...state, products_loading: false, products_error: true };
     });
-
+    // // // // //
     // fetch single product extra reducers
+    // // // // //
     builder.addCase(fetchSingleProduct.pending, (state) => {
       return { ...state, single_product_loading: true };
     });
 
     builder.addCase(fetchSingleProduct.fulfilled, (state, action) => {
       // get similar products
+      // use a ProductType array because we're extracting similar items from the all products array, which is an array made up of ProductType objects.
       const allCategoryItems: ProductType[] = state.products.filter(
         (product: ProductType) => {
           return product.category === action.payload.category;
