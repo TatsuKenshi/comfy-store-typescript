@@ -2,11 +2,11 @@ import { useState } from "react";
 import { ProductImagesTypes, MainImageTypes } from "../types";
 import comingSoon from "../../assets/comingSoon.jpg";
 
-const ProductImages = (images: ProductImagesTypes) => {
-  // the actual image array is at images.images
-  // because the images: ProductsImagesTypes contains the images array made up of MainImageTypes objects
+const ProductImages = (props: ProductImagesTypes) => {
+  // the actual image array is at props.images
+  // because the props: ProductsImagesTypes contains the images array made up of MainImageTypes objects
   // -- the imgs array variable --
-  const imgs = images.images;
+  const imgs = props.images;
 
   // main (big) image state
   // by default, it is the first image in the imgs array

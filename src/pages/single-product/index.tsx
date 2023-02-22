@@ -10,7 +10,6 @@ import {
 } from "../../app/reducers/productsSlice";
 import { single_product_url as url } from "../../utils/constants";
 import { capitalizeTitle, formatPrice } from "../../utils/helpers";
-import { ProductType, SingleProductType } from "../../app/types";
 import Loading from "../../components/loading";
 import ErrorComponent from "../../components/error";
 import PageHero from "../../components/page-hero";
@@ -82,7 +81,7 @@ const SingleProduct = () => {
 
         <section className="content">
           <h2>{name}</h2>
-          <Stars stars={stars} />
+          <Stars stars={stars} reviews={reviews} />
           <h5 className="price">{formatPrice(price)}</h5>
           <p className="desc">{description}</p>
           <p className="info">

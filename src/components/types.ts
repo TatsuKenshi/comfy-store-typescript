@@ -11,6 +11,7 @@ export type AddToCartTypes = {
 
 export type StarsTypes = {
   stars: number;
+  reviews: number;
 };
 
 //
