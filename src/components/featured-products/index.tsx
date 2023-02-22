@@ -29,7 +29,7 @@ const FeaturedProducts = () => {
 
         <div className="underline"></div>
 
-        <div className="section-center featured">
+        <div className="section-center featured" style={{ display: "flex" }}>
           {products.map((product: ProductType) => {
             return <Product {...product} key={product.id} />;
           })}

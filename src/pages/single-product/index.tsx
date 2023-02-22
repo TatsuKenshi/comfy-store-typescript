@@ -77,7 +77,7 @@ const SingleProduct = () => {
           back to products
         </Link>
       </div>
-      <div className="products-center">
+      <div className="product-center">
         <ProductImages images={images} />
 
         <section className="content">

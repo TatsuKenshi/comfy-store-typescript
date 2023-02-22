@@ -21,9 +21,21 @@ const HomeHero = () => {
         </Link>
       </article>
 
-      <article className="img-container">
-        <img src={heroBcg} alt="main" className="main-img" />
-        <img src={heroBcg2} alt="small" className="accent-img" />
+      <article className="img-container" style={{ display: "flex" }}>
+        <img
+          src={heroBcg}
+          alt="main"
+          className="main-img"
+          width="300px"
+          height="300px"
+        />
+        <img
+          src={heroBcg2}
+          alt="small"
+          className="accent-img"
+          width="300px"
+          height="300px"
+        />
       </article>
     </section>
   );

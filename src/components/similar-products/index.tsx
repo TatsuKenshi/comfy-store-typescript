@@ -7,9 +7,12 @@ const SimilarProducts = () => {
   return (
     <>
       <div>SimilarProducts</div>
-      {products.map((product) => {
-        return <Product {...product} key={product.id} />;
-      })}
+
+      <div style={{ display: "flex" }}>
+        {products.map((product) => {
+          return <Product {...product} key={product.id} />;
+        })}
+      </div>
     </>
   );
 };
