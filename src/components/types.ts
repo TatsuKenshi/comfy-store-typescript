@@ -14,7 +14,6 @@ export type StarsTypes = {
   reviews: number;
 };
 
-//
 export type MainImageTypes = {
   filename: string;
   height: number;
@@ -44,4 +43,10 @@ export type MainImageTypes = {
 
 export type ProductImagesTypes = {
   images: MainImageTypes[];
+};
+
+export type AmountButtonsTypes = {
+  amount: number;
+  increaseAmount: () => void;
+  decreaseAmount: () => void;
 };

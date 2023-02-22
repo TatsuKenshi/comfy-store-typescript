@@ -19,7 +19,7 @@ export type SingleProductType = {
   reviews: number;
   id: string;
   company: string;
-  colors: [];
+  colors: string[];
   images: [];
   shipping: boolean;
 };

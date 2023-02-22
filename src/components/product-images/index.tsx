@@ -19,8 +19,6 @@ const ProductImages = (props: ProductImagesTypes) => {
 
   return (
     <div>
-      <h2>Product Images</h2>
-
       {/* main image */}
       <div>
         <img
