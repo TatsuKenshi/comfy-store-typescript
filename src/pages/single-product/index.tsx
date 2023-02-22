@@ -21,26 +21,33 @@ import SimilarProducts from "../../components/similar-products";
 import "./index.scss";
 
 const Singleproduct = () => {
-  // fetching, action dispatch, url param, navigation variables
+  // fetch ref, action dispatch, navigation, url param variables
   let fetchRef = useRef(true);
   const dispatch = useDispatch<AppDispatch>();
-  const params = useParams();
   let navigate = useNavigate();
+  const { id } = useParams();
 
-  // slice getters for the single product, loading, and error states
+  // slice getters for single product, loading, and error states
   const product = useSelector(getSingleProduct);
-  console.log(product);
-
   const productLoading = useSelector(getSingleProductLoading);
   const productError = useSelector(getSingleProductError);
 
   // fetch single product useEffect
   useEffect(() => {
     if (fetchRef.current) {
-      dispatch(fetchSingleProduct(`${url}${params.id}`));
+      dispatch(fetchSingleProduct(`a${url}${id}`));
       fetchRef.current = false;
     }
-  }, [dispatch, params.id]);
+  }, [dispatch, id]);
+
+  // error redirection useEffect
+  useEffect(() => {
+    if (productError) {
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    }
+  }, [productError, navigate]);
 
   // loading return
   if (productLoading) {
@@ -68,7 +75,7 @@ const Singleproduct = () => {
   return (
     <>
       <PageHero title={name} product="products" />
-      <div>Singleproduct {params.id}</div>
+      <div>Singleproduct {id}</div>
       <ProductImages />
       <Stars />
       <AddToCart />
