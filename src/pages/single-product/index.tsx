@@ -71,10 +71,40 @@ const SingleProduct = () => {
   return (
     <section>
       <PageHero title={name} product="products" />
-      <ProductImages />
-      <Stars />
-      <AddToCart />
-      <SimilarProducts />
+
+      <div className="section section-center page">
+        <Link to="/products" className="btn">
+          back to products
+        </Link>
+      </div>
+      <div className="products-center">
+        <ProductImages images={images} />
+
+        <section className="content">
+          <h2>{name}</h2>
+          <Stars stars={stars} />
+          <h5 className="price">{formatPrice(price)}</h5>
+          <p className="desc">{description}</p>
+          <p className="info">
+            <span className="">Availability : </span>
+            {stock > 0 ? "In stock" : "Out of stock"}
+          </p>
+          <p className="info">
+            <span className="">SKU : </span>
+            {sku}
+          </p>
+          <p className="info">
+            <span className="">Brand : </span>
+            {company && capitalizeTitle(company)}
+          </p>
+          <hr className="info" />
+          {stock > 0 && <AddToCart product={product} />}
+        </section>
+      </div>
+
+      <div>
+        <SimilarProducts />
+      </div>
     </section>
   );
 };

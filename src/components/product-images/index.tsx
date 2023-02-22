@@ -1,6 +1,7 @@
 import React from "react";
+import { ProductImagesTypes } from "../types";
 
-const ProductImages = () => {
+const ProductImages = (images: ProductImagesTypes) => {
   return <div>ProductImages</div>;
 };
 
