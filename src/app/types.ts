@@ -37,7 +37,7 @@ export type ProductsInitialStateType = {
   similar_products: ProductType[];
 
   // states from the filterSlice types
-  filtered_products: [];
+  filtered_products: ProductType[];
   grid_view: boolean;
   sort: string;
   filters: {

@@ -75,6 +75,7 @@ const productsSlice = createSlice({
     // inspect this one
     // regular reducers have to have state and (maybe?) action ( or {payload}) args
     // set states to payloads
+    // sidebar reducers
     sideBarOpen(state, { payload }) {
       state.isSidebarOpen = payload;
     },
@@ -82,7 +83,7 @@ const productsSlice = createSlice({
       state.isSidebarOpen = payload;
     },
 
-    // reducers for the filterSlice states
+    // grid_view state (grid/list view) reducers
     setGridView(state, { payload }) {
       state.grid_view = payload;
     },
@@ -112,6 +113,9 @@ const productsSlice = createSlice({
         products: action.payload,
         featured_products: featured_ones,
         filtered_products: action.payload,
+        // examine if you should use
+        // products: [...action.payload]
+        // filtered_products: [...action.payload]
       };
     });
 
@@ -161,7 +165,8 @@ const productsSlice = createSlice({
 });
 
 // products slice actions
-export const { sideBarOpen, sideBarClose } = productsSlice.actions;
+export const { sideBarOpen, sideBarClose, setGridView, setListView } =
+  productsSlice.actions;
 
 // products slice getters
 
