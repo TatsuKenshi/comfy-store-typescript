@@ -11,7 +11,7 @@ export const fetchAllProducts = createAsyncThunk(
   "products/fetchAllProducts",
 
   // promise has to have a return type
-  async (url: string): Promise<[]> => {
+  async (url: string): Promise<ProductType[]> => {
     const response = await axios.get(url);
     return response.data;
   }
@@ -120,6 +120,11 @@ const productsSlice = createSlice({
 
       state.filtered_products = tempProducts;
     },
+
+    // filtering functions
+    setFilters(action, { payload }) {},
+
+    clearFilters(action, { payload }) {},
   },
   extraReducers: (builder) => {
     // // // // //
@@ -206,8 +211,15 @@ const productsSlice = createSlice({
 });
 
 // products slice actions
-export const { sideBarOpen, sideBarClose, setGridView, setListView, setSort } =
-  productsSlice.actions;
+export const {
+  sideBarOpen,
+  sideBarClose,
+  setGridView,
+  setListView,
+  setSort,
+  setFilters,
+  clearFilters,
+} = productsSlice.actions;
 
 // products slice getters
 
@@ -234,18 +246,21 @@ export const getSingleProductError = (state: RootStateType) =>
 export const getSimilarProducts = (state: RootStateType) =>
   state.products.similar_products;
 
-// sidebar getters
+// sidebar getter
 export const getSidebarStatus = (state: RootStateType) =>
   state.products.isSidebarOpen;
 
-// grid and list view getters
+// grid and list view getter
 export const getGridView = (state: RootStateType) => state.products.grid_view;
 
-// sort list getters
+// sort list getter
 export const getSort = (state: RootStateType) => state.products.sort;
 
-// filtered products getters
+// filtered products getter
 export const getFilteredProducts = (state: RootStateType) =>
   state.products.filtered_products;
+
+// filters getter
+export const getFilters = (state: RootStateType) => state.products.filters;
 
 export default productsSlice.reducer;

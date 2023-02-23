@@ -9,6 +9,7 @@ export type ProductType = {
   company: string;
   shipping: boolean;
   description: string;
+  colors: [];
 };
 
 export type SingleProductType = {
