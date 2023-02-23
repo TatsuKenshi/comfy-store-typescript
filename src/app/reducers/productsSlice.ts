@@ -91,6 +91,35 @@ const productsSlice = createSlice({
     setListView(state, { payload }) {
       state.grid_view = payload;
     },
+
+    // sort function
+    setSort(state, { payload }) {
+      state.sort = payload;
+
+      let tempProducts: ProductType[] = [...state.filtered_products];
+
+      if (state.sort === "price-lowest") {
+        tempProducts.sort((a, b) => a.price - b.price);
+      }
+
+      if (state.sort === "price-highest") {
+        tempProducts = tempProducts.sort((a, b) => b.price - a.price);
+      }
+
+      if (state.sort === "name-a") {
+        tempProducts = tempProducts.sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        });
+      }
+
+      if (state.sort === "name-z") {
+        tempProducts = tempProducts.sort((a, b) => {
+          return b.name.localeCompare(a.name);
+        });
+      }
+
+      state.filtered_products = tempProducts;
+    },
   },
   extraReducers: (builder) => {
     // // // // //
@@ -107,12 +136,24 @@ const productsSlice = createSlice({
           return product.featured === true;
         }
       );
+
+      // default sorting for the filtered_products - price-lowest
+      const filteredOnes: ProductType[] = action.payload;
+      filteredOnes.sort((a, b) => a.price - b.price);
+
+      // default maxPrice and price state for filtering
+      let maxPriceArray: number[] = filteredOnes.map(
+        (product) => product.price
+      );
+      let maxPrice: number = Math.max(...maxPriceArray);
+
       return {
         ...state,
         products_loading: false,
-        products: action.payload,
+        products: [...action.payload],
         featured_products: featured_ones,
-        filtered_products: action.payload,
+        filtered_products: [...filteredOnes],
+        filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
         // examine if you should use
         // products: [...action.payload]
         // filtered_products: [...action.payload]
@@ -165,7 +206,7 @@ const productsSlice = createSlice({
 });
 
 // products slice actions
-export const { sideBarOpen, sideBarClose, setGridView, setListView } =
+export const { sideBarOpen, sideBarClose, setGridView, setListView, setSort } =
   productsSlice.actions;
 
 // products slice getters
@@ -176,6 +217,10 @@ export const getAllProductsLoading = (state: RootStateType) =>
   state.products.products_loading;
 export const getAllProductsError = (state: RootStateType) =>
   state.products.products_error;
+
+// featured products getter
+export const getFeaturedProducts = (state: RootStateType) =>
+  state.products.featured_products;
 
 // single product getters
 export const getSingleProduct = (state: RootStateType) =>
@@ -189,19 +234,18 @@ export const getSingleProductError = (state: RootStateType) =>
 export const getSimilarProducts = (state: RootStateType) =>
   state.products.similar_products;
 
-// featured products getter
-export const getFeaturedProducts = (state: RootStateType) =>
-  state.products.featured_products;
-
-// filtered products getters
-export const getFilteredProducts = (state: RootStateType) =>
-  state.products.filtered_products;
-
 // sidebar getters
 export const getSidebarStatus = (state: RootStateType) =>
   state.products.isSidebarOpen;
 
 // grid and list view getters
 export const getGridView = (state: RootStateType) => state.products.grid_view;
+
+// sort list getters
+export const getSort = (state: RootStateType) => state.products.sort;
+
+// filtered products getters
+export const getFilteredProducts = (state: RootStateType) =>
+  state.products.filtered_products;
 
 export default productsSlice.reducer;
