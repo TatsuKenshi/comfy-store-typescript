@@ -7,6 +7,7 @@ import {
   ProductType,
 } from "../types";
 
+// fetching Async Thunks
 export const fetchAllProducts = createAsyncThunk(
   "products/fetchAllProducts",
 
@@ -27,6 +28,7 @@ export const fetchSingleProduct = createAsyncThunk(
   }
 );
 
+// initial state
 const initialState: ProductsInitialStateType = {
   isSidebarOpen: false,
   products_loading: false,
@@ -72,13 +74,11 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    // inspect this one
-    // regular reducers have to have state and (maybe?) action ( or {payload}) args
-    // set states to payloads
     // sidebar reducers
     sideBarOpen(state, { payload }) {
       state.isSidebarOpen = payload;
     },
+
     sideBarClose(state, { payload }) {
       state.isSidebarOpen = payload;
     },
@@ -122,9 +122,40 @@ const productsSlice = createSlice({
     },
 
     // filtering functions
-    setFilters(action, { payload }) {},
+    setFilters(state, { payload }) {
+      let tempProducts = [...payload];
 
-    clearFilters(action, { payload }) {},
+      const { text, category, company, color, price, shipping } = state.filters;
+
+      // company
+      if (company !== "all") {
+        tempProducts = tempProducts.filter((product) => {
+          return product.company.toLowerCase() === company.toLowerCase();
+        });
+      }
+
+      state.filtered_products = tempProducts;
+    },
+
+    updateFiltersState(state, { payload }) {
+      const { name, value } = payload;
+
+      return { ...state, filters: { ...state.filters, [name]: value } };
+    },
+
+    clearFilters(state, { payload }) {
+      const { text, company, category, color, shipping } = payload;
+      state.filters.text = text;
+      state.filters.company = company;
+      state.filters.category = category;
+      state.filters.color = color;
+      state.filters.shipping = shipping;
+      state.filters.min_price = 0;
+      state.filters.price = state.filters.max_price;
+      // state.filters.max_price = state.filters.max_price;
+
+      state.filtered_products = state.products;
+    },
   },
   extraReducers: (builder) => {
     // // // // //
@@ -159,9 +190,6 @@ const productsSlice = createSlice({
         featured_products: featured_ones,
         filtered_products: [...filteredOnes],
         filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
-        // examine if you should use
-        // products: [...action.payload]
-        // filtered_products: [...action.payload]
       };
     });
 
@@ -218,6 +246,7 @@ export const {
   setListView,
   setSort,
   setFilters,
+  updateFiltersState,
   clearFilters,
 } = productsSlice.actions;
 
