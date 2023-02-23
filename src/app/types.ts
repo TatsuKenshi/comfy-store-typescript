@@ -6,6 +6,9 @@ export type ProductType = {
   name: string;
   price: number;
   image: string;
+  company: string;
+  shipping: boolean;
+  description: string;
 };
 
 export type SingleProductType = {

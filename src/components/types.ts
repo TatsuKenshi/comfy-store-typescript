@@ -1,4 +1,4 @@
-import { SingleProductType } from "../app/types";
+import { SingleProductType, ProductType } from "../app/types";
 
 export type PageHeroTypes = {
   title: string;
@@ -49,4 +49,12 @@ export type AmountButtonsTypes = {
   amount: number;
   increaseAmount: () => void;
   decreaseAmount: () => void;
+};
+
+export type GridViewTypes = {
+  products: ProductType[];
+};
+
+export type ListViewTypes = {
+  products: ProductType[];
 };

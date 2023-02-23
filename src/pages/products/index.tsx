@@ -1,43 +1,30 @@
 import "./index.scss";
-import {
-  getAllProducts,
-  getAllProductsLoading,
-  getAllProductsError,
-} from "../../app/reducers/productsSlice";
-import { useSelector } from "react-redux";
-import Product from "../../components/product";
-import { ProductType } from "../../app/types";
+import PageHero from "../../components/page-hero";
+import Filters from "../../components/filters";
+import Sort from "../../components/sort";
+import ProductsList from "../../components/products-list";
 
 const Products = () => {
-  const products = useSelector(getAllProducts);
-  const productsLoading = useSelector(getAllProductsLoading);
-  const productsError = useSelector(getAllProductsError);
-
-  if (productsLoading) {
-    return (
-      <div>
-        <h1>Loading...</h1>
-      </div>
-    );
-  }
-
-  if (productsError) {
-    return (
-      <div>
-        <h1>There was an error...</h1>
-      </div>
-    );
-  }
-
   return (
-    <div>
-      <h1>Products</h1>
-      <div>
-        {products.map((product: ProductType) => {
-          return <Product {...product} key={product.id} />;
-        })}
+    <section>
+      <PageHero title="Products" />
+
+      <div className="page" style={{ display: "flex" }}>
+        <aside className="section-center products">
+          <Filters />
+        </aside>
+
+        <article>
+          <div>
+            <Sort />
+          </div>
+
+          <div>
+            <ProductsList />
+          </div>
+        </article>
       </div>
-    </div>
+    </section>
   );
 };
 
