@@ -127,6 +127,24 @@ const productsSlice = createSlice({
 
       const { text, category, company, color, price, shipping } = state.filters;
 
+      // // //
+      // filtering conditions
+      // // //
+
+      // text state
+      // if (text) {
+      //   tempProducts = tempProducts.filter((product) => {
+      //     return product.name.toLowerCase().startsWith(text);
+      //   });
+      // }
+
+      // category state
+      // if (category !== "all") {
+      //   tempProducts = tempProducts.filter((product) => {
+      //     return product.category.toLowerCase() === category.toLowerCase();
+      //   });
+      // }
+
       // company
       if (company !== "all") {
         tempProducts = tempProducts.filter((product) => {
@@ -134,13 +152,32 @@ const productsSlice = createSlice({
         });
       }
 
+      // color
+      // if (color !== "all") {
+      //   tempProducts = tempProducts.filter((product) => {
+      //     return product.colors.find(
+      //       (productColor: string) => productColor === color
+      //     );
+      //   });
+      // }
+
+      // price
+      // tempProducts = tempProducts.filter((product) => product.price <= price);
+
+      // shipping
+      // if (shipping) {
+      //   tempProducts = tempProducts.filter(
+      //     (product) => product.shipping === true
+      //   );
+      // }
+
       state.filtered_products = tempProducts;
     },
 
     updateFiltersState(state, { payload }) {
       const { name, value } = payload;
 
-      return { ...state, filters: { ...state.filters, [name]: value } };
+      state.filters = { ...state.filters, [name]: value };
     },
 
     clearFilters(state, { payload }) {
