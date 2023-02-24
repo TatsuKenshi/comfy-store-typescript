@@ -53,8 +53,6 @@ const initialState: ProductsInitialStateType = {
     shipping: false,
   },
   similar_products: [],
-
-  // states from the filterSlice initial states
   filtered_products: [],
   grid_view: true,
   sort: "price-lowest",
@@ -123,8 +121,11 @@ const productsSlice = createSlice({
 
     // filtering functions
     setFilters(state, { payload }) {
+      // the products array (all products) is in the payload
+      // we first set tempProducts to the all products array
       let tempProducts = [...payload];
 
+      // destructure filters
       const { text, category, company, color, price, shipping } = state.filters;
 
       // // //
@@ -171,6 +172,7 @@ const productsSlice = createSlice({
         );
       }
 
+      // we set filtered_products to what's left in tempProducts
       state.filtered_products = tempProducts;
     },
 
@@ -181,7 +183,11 @@ const productsSlice = createSlice({
     },
 
     clearFilters(state, { payload }) {
+      // resetting all filter states
+      // destructure props from the payload
       const { text, company, category, color, shipping } = payload;
+
+      // set the states
       state.filters.text = text;
       state.filters.company = company;
       state.filters.category = category;
@@ -189,8 +195,6 @@ const productsSlice = createSlice({
       state.filters.shipping = shipping;
       state.filters.min_price = 0;
       state.filters.price = state.filters.max_price;
-      // state.filters.max_price = state.filters.max_price;
-
       state.filtered_products = state.products;
     },
   },
@@ -233,6 +237,7 @@ const productsSlice = createSlice({
     builder.addCase(fetchAllProducts.rejected, (state) => {
       return { ...state, products_loading: false, products_error: true };
     });
+
     // // // // //
     // fetch single product extra reducers
     // // // // //
@@ -270,8 +275,6 @@ const productsSlice = createSlice({
         single_product_error: true,
       };
     });
-
-    // extraReducers for the filterSlice states
   },
 });
 
@@ -286,8 +289,6 @@ export const {
   updateFiltersState,
   clearFilters,
 } = productsSlice.actions;
-
-// products slice getters
 
 // all products getters
 export const getAllProducts = (state: RootStateType) => state.products.products;

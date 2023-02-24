@@ -13,7 +13,7 @@ import { FaCheck, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { formatPrice } from "../../utils/helpers";
 
 const Filters = () => {
-  // get filters and products from the ProductsSlice
+  // get and destructure filters and products from the ProductsSlice
   const filters = useSelector(getFilters);
   const { text, company, color, min_price, price, max_price, shipping } =
     filters;
@@ -28,10 +28,8 @@ const Filters = () => {
   // filter section visibility states for small screens
   // size tracks the window width
   const [size, setSize] = useState<number>(window.innerWidth);
-
   // expandForm tracks the visibility of the entire form
   const [expandForm, setExpandForm] = useState<boolean>(false);
-
   // states to track individual parts of the form
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const [showCategory, setShowCategory] = useState<boolean>(false);
@@ -65,7 +63,7 @@ const Filters = () => {
     dispatch(updateFiltersState({ name, value }));
   };
 
-  // useEffect dispatches setFilters function which will iterate over the filtered_products (array of displayed products), according to the changes in the filters state made by the updateFiltersState function (sends the name of the relevant input and its value to the ProductsSlice, where the corresponding filter state gets updated).
+  // useEffect dispatches setFilters action which will iterate over the all products array (and set the filtered_products array to what's left of it). setFilters work according to the changes in the filters state made by the updateFiltersState action (sends the name of the relevant input and its value to the ProductsSlice, where the corresponding filter state gets updated).
   useEffect(() => {
     dispatch(setFilters(products));
   }, [dispatch, products, filters]);
