@@ -132,18 +132,18 @@ const productsSlice = createSlice({
       // // //
 
       // text state
-      // if (text) {
-      //   tempProducts = tempProducts.filter((product) => {
-      //     return product.name.toLowerCase().startsWith(text);
-      //   });
-      // }
+      if (text) {
+        tempProducts = tempProducts.filter((product) => {
+          return product.name.toLowerCase().startsWith(text);
+        });
+      }
 
       // category state
-      // if (category !== "all") {
-      //   tempProducts = tempProducts.filter((product) => {
-      //     return product.category.toLowerCase() === category.toLowerCase();
-      //   });
-      // }
+      if (category !== "all") {
+        tempProducts = tempProducts.filter((product) => {
+          return product.category.toLowerCase() === category.toLowerCase();
+        });
+      }
 
       // company
       if (company !== "all") {
@@ -153,23 +153,23 @@ const productsSlice = createSlice({
       }
 
       // color
-      // if (color !== "all") {
-      //   tempProducts = tempProducts.filter((product) => {
-      //     return product.colors.find(
-      //       (productColor: string) => productColor === color
-      //     );
-      //   });
-      // }
+      if (color !== "all") {
+        tempProducts = tempProducts.filter((product) => {
+          return product.colors.find(
+            (productColor: string) => productColor === color
+          );
+        });
+      }
 
       // price
-      // tempProducts = tempProducts.filter((product) => product.price <= price);
+      tempProducts = tempProducts.filter((product) => product.price <= price);
 
-      // shipping
-      // if (shipping) {
-      //   tempProducts = tempProducts.filter(
-      //     (product) => product.shipping === true
-      //   );
-      // }
+      // shipping;
+      if (shipping) {
+        tempProducts = tempProducts.filter(
+          (product) => product.shipping === true
+        );
+      }
 
       state.filtered_products = tempProducts;
     },
