@@ -6,6 +6,7 @@ const Checkout = React.lazy(() => import("../pages/checkout/index"));
 const Products = React.lazy(() => import("../pages/products/index"));
 const Contact = React.lazy(() => import("../pages/contact/index"));
 const SingleProduct = React.lazy(() => import("../pages/single-product/index"));
+const Cart = React.lazy(() => import("../pages/cart/index"));
 
 const routes = [
   {
@@ -43,6 +44,12 @@ const routes = [
     path: "products/:id",
     folder: "single-product",
     element: SingleProduct,
+  },
+  {
+    id: 6,
+    path: "cart",
+    folder: "cart",
+    element: Cart,
   },
 ];
 
