@@ -55,3 +55,20 @@ export type ProductsInitialStateType = {
     shipping: boolean;
   };
 };
+
+export type CartProductType = {
+  id: string;
+  name: string;
+  color: string;
+  amount: number;
+  image: string;
+  price: number;
+  max: number;
+};
+
+export type CartInitialStateType = {
+  cart: CartProductType[];
+  total_items: number;
+  total_amount: number;
+  shipping_fee: number;
+};

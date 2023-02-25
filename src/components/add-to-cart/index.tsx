@@ -3,8 +3,14 @@ import { Link } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import AmountButtons from "../amount-buttons/index";
 import { AddToCartTypes } from "../types";
+import { addToCart } from "../../app/reducers/cartSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../app/store";
 
 const AddToCart = ({ product }: AddToCartTypes) => {
+  // cartSlice variables for dispatching addToCart action
+  const dispatch = useDispatch<AppDispatch>();
+
   // destructure product id, stock, and colors
   const { id, stock, colors } = product;
 
@@ -82,7 +88,11 @@ const AddToCart = ({ product }: AddToCartTypes) => {
           decreaseAmount={decreaseAmount}
         />
 
-        <button>
+        <button
+          onClick={() =>
+            dispatch(addToCart({ id, amount, mainColor, product }))
+          }
+        >
           <Link to="/cart" className="btn">
             Add to Cart
           </Link>
