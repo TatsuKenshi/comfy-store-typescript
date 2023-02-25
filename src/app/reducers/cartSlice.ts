@@ -87,8 +87,8 @@ const cartSlice = createSlice({
     toggleAmount(state, { payload }) {},
 
     // clear out the entire cart
-    clearCart(state, { payload }) {
-      state = { ...state, cart: [] };
+    clearCart(state) {
+      state.cart = [];
     },
 
     // calculate cart's totals
