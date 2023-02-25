@@ -1,15 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ProductType } from "../types";
 import { RootStateType } from "../store";
 
 type InitialState = {
-  // cart: getLocalStorage(),
+  cart: ProductType[];
   total_items: number;
   total_amount: number;
   shipping_fee: number;
 };
 
 const initialState: InitialState = {
-  // cart: getLocalStorage(),
+  cart: [],
   total_items: 0,
   total_amount: 0,
   shipping_fee: 534,
