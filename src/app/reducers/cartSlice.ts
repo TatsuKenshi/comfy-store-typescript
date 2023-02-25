@@ -2,8 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { CartInitialStateType, CartProductType } from "../types";
 import { RootStateType } from "../store";
 
+// get the cart stored in localStorage, if it exists
+const getLocalStorage = () => {
+  const storedCart: string | null = localStorage.getItem("cart");
+  let cart: CartProductType[] = [];
+
+  if (storedCart) {
+    cart = JSON.parse(storedCart);
+    return cart;
+  }
+  return cart;
+};
+
 const initialState: CartInitialStateType = {
-  cart: [],
+  cart: getLocalStorage(),
   total_items: 0,
   total_amount: 0,
   shipping_fee: 534,
@@ -19,6 +31,7 @@ const cartSlice = createSlice({
       const { id, amount, mainColor: color, product } = payload;
 
       // create a tempItem for the received product
+      // check to find it in the cart state
       // undefined is there if the item doesn't exist in the state
       const tempItem: CartProductType | undefined = state.cart.find(
         (item) => item.id === id + color
@@ -51,6 +64,8 @@ const cartSlice = createSlice({
         // spread the state and set cart state to the tempCart array
         return { ...state, cart: tempCart };
       } else {
+        // if the tempItem doesn't exist in the state
+        // create a newItem object
         const newItem: CartProductType = {
           id: id + color,
           name: product.name,
@@ -60,14 +75,37 @@ const cartSlice = createSlice({
           price: product.price,
           max: product.stock,
         };
+        // spread the state, spread the cart and add the new item
         return { ...state, cart: [...state.cart, newItem] };
       }
+    },
+
+    // remove a single item item
+    removeItem(state, { payload }) {},
+
+    // toggle (increase/decrease) amount for a single item
+    toggleAmount(state, { payload }) {},
+
+    // clear out the entire cart
+    clearCart(state, { payload }) {
+      state = { ...state, cart: [] };
+    },
+
+    // calculate cart's totals
+    countCartTotals(state, { payload }) {
+      const { total_items, total_amount } = payload;
     },
   },
 });
 
 // cart slice actions
-export const { addToCart } = cartSlice.actions;
+export const {
+  addToCart,
+  removeItem,
+  toggleAmount,
+  clearCart,
+  countCartTotals,
+} = cartSlice.actions;
 
 // cart slice getters
 

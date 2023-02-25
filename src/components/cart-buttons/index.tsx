@@ -1,12 +1,11 @@
-import React from "react";
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-
-// import { useProductsContext } from "../../context/products-context/ProductsContext";
-// import { useCartContext } from "../../context/cart-context/CartContext";
-// import { useUserContext } from "../../context/user-context/UserContext";
+import { useSelector } from "react-redux";
+import { getTotalItems } from "../../app/reducers/cartSlice";
 
 const CartButtons = () => {
+  const items = useSelector(getTotalItems);
+
   return (
     <div style={{ display: "flex" }}>
       <div style={{ position: "relative", marginRight: "0.5rem" }}>
@@ -29,7 +28,7 @@ const CartButtons = () => {
             fontSize: "0.75rem",
           }}
         >
-          10
+          {items}
         </div>
       </div>
       <div>
