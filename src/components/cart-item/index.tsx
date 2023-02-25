@@ -12,11 +12,11 @@ const CartItem = (item: CartProductType) => {
 
   // increase and decrease amount functions
   const increaseAmount = () => {
-    dispatch(toggleAmount({ id, toggleType: "increase" }));
+    dispatch(toggleAmount({ id, value: "increase" }));
   };
 
   const decreaseAmount = () => {
-    dispatch(toggleAmount({ id, toggleType: "decrease" }));
+    dispatch(toggleAmount({ id, value: "decrease" }));
   };
 
   return (
@@ -80,7 +80,7 @@ const CartItem = (item: CartProductType) => {
 
       {/* remove button */}
       <div className="" style={{ width: "150px" }}>
-        <button className="" onClick={() => removeItem(id)}>
+        <button className="" onClick={() => dispatch(removeItem(id))}>
           <FaTrash className="" />
         </button>
       </div>

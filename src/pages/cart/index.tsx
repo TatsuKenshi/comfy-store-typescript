@@ -16,7 +16,7 @@ const Cart = () => {
   // whenever the cart array (CartProductType[]) changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
-    dispatch(countCartTotals(cart));
+    dispatch(countCartTotals());
   }, [dispatch, cart]);
 
   if (cart.length < 1) {
