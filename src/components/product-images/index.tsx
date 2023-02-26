@@ -3,11 +3,9 @@ import { ProductImagesTypes, MainImageTypes } from "../types";
 import comingSoon from "../../assets/comingSoon.jpg";
 
 const ProductImages = (props: ProductImagesTypes) => {
-  // -- the imgs array variable --
   const imgs = props.images;
 
   // main (big) image state
-  // by default, it is the first image in the imgs array
   const [mainImage, setMainImage] = useState<MainImageTypes>(
     imgs[0] || {
       url: { comingSoon },

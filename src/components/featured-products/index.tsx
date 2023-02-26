@@ -8,6 +8,7 @@ import {
 } from "../../app/reducers/productsSlice";
 import { useSelector } from "react-redux";
 import { ProductType } from "../../app/types";
+import { Link } from "react-router-dom";
 
 const FeaturedProducts = () => {
   const products = useSelector(getFeaturedProducts);
@@ -34,6 +35,11 @@ const FeaturedProducts = () => {
             return <Product {...product} key={product.id} />;
           })}
         </div>
+        <button>
+          <Link to="/products" className="btn">
+            All Products
+          </Link>
+        </button>
       </div>
     </div>
   );
