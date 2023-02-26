@@ -21,6 +21,8 @@ import { useUserContext } from "../../context/user-context/UserContext";
 import { formatPrice } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { UserContextType } from "../../context/user-context/UserContext";
+import { StripeCardElementChangeEvent } from "@stripe/stripe-js";
+import { Link } from "react-router-dom";
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY as string);
 
@@ -38,9 +40,10 @@ const CheckoutForm = () => {
   let stripeRef = useRef(true);
 
   // stripe states and variables
+  // inspect and retype error and processing states
   const [succeeded, setSucceeded] = useState<boolean>(false);
-  const [error, serError] = useState<null | {}>(null);
-  const [processing, setProcessing] = useState<string>("");
+  const [error, serError] = useState<null | string>(null);
+  const [processing, setProcessing] = useState<boolean | undefined>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [clientSecret, setClientSecret] = useState<string>("");
   const stripe = useStripe();
@@ -63,7 +66,87 @@ const CheckoutForm = () => {
       },
     },
   };
-  return <h2>Hello from Stripe Checkout</h2>;
+
+  //create payment intent
+  const createPaymentIntent = async () => {
+    try {
+      const data = await axios.post(
+        "/.netlify/functions/create-payment-intent",
+        JSON.stringify({ cart, shipping, totalAmount })
+      );
+    } catch (error) {}
+  };
+
+  // create payment intent useEffect
+  useEffect(() => {
+    if (stripeRef.current) {
+      createPaymentIntent();
+      stripeRef.current = false;
+    }
+  }, []);
+
+  const handleChange = async (
+    event: StripeCardElementChangeEvent
+  ): Promise<void> => {};
+
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {};
+
+  return (
+    <div className="">
+      {succeeded ? (
+        <article className="">
+          <h4>Thank You!</h4>
+          <h4>Your payment was successful!</h4>
+          Redirecting to Home Page shortly.
+        </article>
+      ) : (
+        <article className="">
+          <h4 className="">Hello, {myUser?.name}</h4>
+          <p>Your total is {formatPrice(shipping + totalAmount)}</p>
+          <p>Test Card Number : 4242 4242 4242 4242</p>
+        </article>
+      )}
+
+      <div className="">
+        <form id="payment-form" onSubmit={handleSubmit}>
+          <CardElement
+            id="card-element"
+            options={cardStyle}
+            onChange={handleChange}
+          />
+          <button disabled={processing || disabled || succeeded}>
+            <span id="button-text">
+              {processing ? (
+                <div className="spinner" id="spinner"></div>
+              ) : (
+                "Pay"
+              )}
+            </span>
+          </button>
+          {/* Show any error that happens when processing the payment */}
+          {error && (
+            <div className="card-error" role="alert">
+              {error}
+            </div>
+          )}
+
+          {/* Show a success message upon completion */}
+          <p className={succeeded ? "result-message" : "result-message hidden"}>
+            Payment Succeeded, see the result in your{" "}
+            <a
+              href={`https://dashboard.stripe.com/test/payments`}
+              style={{ textDecoration: "underline" }}
+            >
+              Stripe dashboard
+            </a>
+            . Refresh the page to pay again.
+          </p>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 const StripeCheckout = () => {
@@ -185,5 +268,4 @@ const StyledStripe = styled.section`
     }
   }
 `;
-
 export default StripeCheckout;
