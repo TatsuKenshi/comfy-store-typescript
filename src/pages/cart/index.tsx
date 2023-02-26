@@ -1,23 +1,16 @@
-import { useEffect } from "react";
-import { getCart, countCartTotals } from "../../app/reducers/cartSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../app/store";
+import { getCart } from "../../app/reducers/cartSlice";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PageHero from "../../components/page-hero";
 import CartContent from "../../components/cart-content";
 import "./index.scss";
+// import { useUserContext } from "../../context/user-context/UserContext";
+// import { UserContextType } from "../../context/user-context/UserContext";
 
 const Cart = () => {
   const cart = useSelector(getCart);
-  const dispatch = useDispatch<AppDispatch>();
-
-  // useEffect updates the cart state in localStorage
-  // dispatches countCartTotals (calculates total_amount, total_items)
-  // whenever the cart array (CartProductType[]) changes
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-    dispatch(countCartTotals());
-  }, [dispatch, cart]);
+  // const { myUser } = useUserContext() as UserContextType;
+  // console.log(myUser);
 
   if (cart.length < 1) {
     return (

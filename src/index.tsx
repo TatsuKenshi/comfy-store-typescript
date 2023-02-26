@@ -4,6 +4,7 @@ import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import { Auth0Provider } from "@auth0/auth0-react";
+import UserProvider from "./context/user-context/UserContext";
 import "./index.css";
 
 // application wrappers go here, including the theming provider, i18next provider, etc
@@ -23,21 +24,23 @@ root.render(
       redirectUri={window.location.origin}
       cacheLocation="localstorage"
     >
-      <Provider store={store}>
-        {/* app providers, userProvider */}
-        {/* app providers, productProvider */}
-        {/* app providers, filterProvider */}
-        {/* app providers, cartProvider */}
-        {/* app providers, authWrapper */}
-        {/* i18next */}
-        <App />
-        {/* i18next */}
-        {/* app providers, authWrapper */}
-        {/* app providers, cartProvider */}
-        {/* app providers, filterProvider */}
-        {/* app providers, productProvider */}
-        {/* app providers, userProvider */}
-      </Provider>
+      <UserProvider>
+        <Provider store={store}>
+          {/* app providers, userProvider */}
+          {/* app providers, productProvider */}
+          {/* app providers, filterProvider */}
+          {/* app providers, cartProvider */}
+          {/* app providers, authWrapper */}
+          {/* i18next */}
+          <App />
+          {/* i18next */}
+          {/* app providers, authWrapper */}
+          {/* app providers, cartProvider */}
+          {/* app providers, filterProvider */}
+          {/* app providers, productProvider */}
+          {/* app providers, userProvider */}
+        </Provider>
+      </UserProvider>
     </Auth0Provider>
     {/* app providers, authProvider */}
   </React.StrictMode>
