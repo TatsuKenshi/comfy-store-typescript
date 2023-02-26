@@ -3,8 +3,6 @@ import { ProductImagesTypes, MainImageTypes } from "../types";
 import comingSoon from "../../assets/comingSoon.jpg";
 
 const ProductImages = (props: ProductImagesTypes) => {
-  // the actual image array is at props.images
-  // because the props: ProductsImagesTypes contains the images array made up of MainImageTypes objects
   // -- the imgs array variable --
   const imgs = props.images;
 

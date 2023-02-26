@@ -1,4 +1,3 @@
-import React from "react";
 import "./index.scss";
 import PageHero from "../../components/page-hero";
 

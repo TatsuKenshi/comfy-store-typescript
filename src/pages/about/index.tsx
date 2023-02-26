@@ -1,4 +1,3 @@
-import React from "react";
 import hero from "../../assets/hero-bcg.jpeg";
 import PageHero from "../../components/page-hero";
 import "./index.scss";
