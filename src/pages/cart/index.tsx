@@ -4,13 +4,9 @@ import { Link } from "react-router-dom";
 import PageHero from "../../components/page-hero";
 import CartContent from "../../components/cart-content";
 import "./index.scss";
-// import { useUserContext } from "../../context/user-context/UserContext";
-// import { UserContextType } from "../../context/user-context/UserContext";
 
 const Cart = () => {
   const cart = useSelector(getCart);
-  // const { myUser } = useUserContext() as UserContextType;
-  // console.log(myUser);
 
   if (cart.length < 1) {
     return (

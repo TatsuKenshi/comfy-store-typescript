@@ -1,10 +1,17 @@
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getTotalItems } from "../../app/reducers/cartSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { getTotalItems, clearCart } from "../../app/reducers/cartSlice";
+import { AppDispatch } from "../../app/store";
+import { useUserContext } from "../../context/user-context/UserContext";
+import { UserContextType } from "../../context/user-context/UserContext";
 
 const CartButtons = () => {
   const items = useSelector(getTotalItems);
+  const { myUser, loginWithRedirect, logout } =
+    useUserContext() as UserContextType;
+
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <div style={{ display: "flex" }}>
@@ -32,25 +39,56 @@ const CartButtons = () => {
         </div>
       </div>
       <div>
-        <button
-          style={{
-            border: "none",
-            background: "none",
-            fontSize: "1.5rem",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          Login{" "}
-          <FaUserPlus
+        {myUser ? (
+          <button
             style={{
-              width: "30px",
-              height: "30px",
-              color: "slateGray",
-              marginLeft: "0.2rem",
+              border: "none",
+              background: "none",
+              fontSize: "1.5rem",
+              display: "flex",
+              alignItems: "center",
             }}
-          />
-        </button>
+            type="button"
+            className="auth-btn"
+            onClick={() => {
+              logout({ returnTo: window.location.origin });
+              dispatch(clearCart());
+            }}
+          >
+            Logout
+            <FaUserMinus
+              style={{
+                width: "30px",
+                height: "30px",
+                color: "slateGray",
+                marginLeft: "0.2rem",
+              }}
+            />
+          </button>
+        ) : (
+          <button
+            style={{
+              border: "none",
+              background: "none",
+              fontSize: "1.5rem",
+              display: "flex",
+              alignItems: "center",
+            }}
+            type="button"
+            className="auth-btn"
+            onClick={loginWithRedirect}
+          >
+            Login
+            <FaUserPlus
+              style={{
+                width: "30px",
+                height: "30px",
+                color: "slateGray",
+                marginLeft: "0.2rem",
+              }}
+            />
+          </button>
+        )}
       </div>
     </div>
   );
