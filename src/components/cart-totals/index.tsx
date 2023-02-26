@@ -1,20 +1,14 @@
-import { useState } from "react";
 import { getTotalAmount, getShippingFee } from "../../app/reducers/cartSlice";
-
-// user slice imports go here
-
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch } from "../../app/store";
+import { useSelector } from "react-redux";
 import { formatPrice } from "../../utils/helpers";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../context/user-context/UserContext";
+import { UserContextType } from "../../context/user-context/UserContext";
 
 const CartTotals = () => {
-  // mock user state
-  const [myUser, setMyUser] = useState<boolean>(false);
-
   const totalAmount = useSelector(getTotalAmount);
   const shippingFee = useSelector(getShippingFee);
-  const dispatch = useDispatch<AppDispatch>();
+  const { myUser, loginWithRedirect } = useUserContext() as UserContextType;
 
   return (
     <section>
@@ -34,11 +28,17 @@ const CartTotals = () => {
         </h4>
       </article>
 
-      <button>
-        <Link to="/checkout" className="btn">
-          Go to checkout
-        </Link>
-      </button>
+      {myUser ? (
+        <button>
+          <Link to="/checkout" className="btn">
+            Go to checkout
+          </Link>
+        </button>
+      ) : (
+        <button type="button" onClick={loginWithRedirect}>
+          Log in
+        </button>
+      )}
     </section>
   );
 };

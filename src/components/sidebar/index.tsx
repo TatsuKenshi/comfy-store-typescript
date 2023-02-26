@@ -1,4 +1,3 @@
-import React from "react";
 import logo from "../../assets/logo.svg";
 import { NavLink } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
@@ -8,10 +7,13 @@ import { getSidebarStatus } from "../../app/reducers/productsSlice";
 import { sideBarClose } from "../../app/reducers/productsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../app/store";
+import { useUserContext } from "../../context/user-context/UserContext";
+import { UserContextType } from "../../context/user-context/UserContext";
 
 const SideBar = () => {
   const sidebarStatus = useSelector(getSidebarStatus);
   const dispatch = useDispatch<AppDispatch>();
+  const { myUser } = useUserContext() as UserContextType;
 
   return (
     <>
@@ -55,11 +57,13 @@ const SideBar = () => {
               );
             })}
 
-            <div>
-              <li>
-                <NavLink to="/checkout">Checkout</NavLink>
-              </li>
-            </div>
+            {myUser && (
+              <div>
+                <li>
+                  <NavLink to="/checkout">Checkout</NavLink>
+                </li>
+              </div>
+            )}
           </div>
 
           <div>

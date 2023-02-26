@@ -6,9 +6,12 @@ import CartButtons from "../cart-buttons/index";
 import { sideBarOpen } from "../../app/reducers/productsSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
+import { useUserContext } from "../../context/user-context/UserContext";
+import { UserContextType } from "../../context/user-context/UserContext";
 
 const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { myUser } = useUserContext() as UserContextType;
 
   return (
     <nav
@@ -44,6 +47,13 @@ const Navbar = () => {
               </li>
             );
           })}
+          {myUser && (
+            <li className="">
+              <NavLink to="/checkout" className="">
+                Checkout
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
 
