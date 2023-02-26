@@ -1,204 +1,104 @@
-const CheckoutComponent = () => {
-  return <div>StripeCheckout</div>;
-};
+import { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  CardElement,
+  useStripe,
+  Elements,
+  useElements,
+} from "@stripe/react-stripe-js";
+import axios from "axios";
+import {
+  getCart,
+  getTotalAmount,
+  getShippingFee,
+  clearCart,
+} from "../../app/reducers/cartSlice";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../app/store";
+import { useUserContext } from "../../context/user-context/UserContext";
+import { formatPrice } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
+import { UserContextType } from "../../context/user-context/UserContext";
 
-export default CheckoutComponent;
+const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY as string);
 
-// import React, { useState, useEffect, useRef } from "react";
-// import styled from "styled-components";
-// import { loadStripe } from "@stripe/stripe-js";
-// import {
-//   CardElement,
-//   useStripe,
-//   Elements,
-//   useElements,
-// } from "@stripe/react-stripe-js";
-// import axios from "axios";
-// import { useCartContext } from "../../context/cart-context/CartContext";
-// import { useUserContext } from "../../context/user-context/UserContext";
-// import { formatPrice } from "../../utils/helpers";
-// import { useNavigate } from "react-router-dom";
+const CheckoutForm = () => {
+  // cart states and dispatch
+  const cart = useSelector(getCart);
+  const totalAmount = useSelector(getTotalAmount);
+  const shipping = useSelector(getShippingFee);
+  const dispatch = useDispatch<AppDispatch>();
+  // myUser state from userContext
+  const { myUser } = useUserContext() as UserContextType;
+  // navitage function
+  const navigate = useNavigate();
+  // fetching ref
+  let stripeRef = useRef(true);
 
-// const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+  // stripe states and variables
+  const [succeeded, setSucceeded] = useState<boolean>(false);
+  const [error, serError] = useState<null | {}>(null);
+  const [processing, setProcessing] = useState<string>("");
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const [clientSecret, setClientSecret] = useState<string>("");
+  const stripe = useStripe();
+  const elements = useElements();
 
-// const CheckoutForm = () => {
-//   const { cart, total_amount, shipping_fee, clearCart } = useCartContext();
-//   const { myUser } = useUserContext();
-//   const navigate = useNavigate();
-
-//   let stripeRef = useRef(true);
-
-// Stripe states and variables
-//   const [succeeded, setSucceeded] = useState(false);
-//   const [error, setError] = useState(null);
-//   const [processing, setProcessing] = useState("");
-//   const [disabled, setDisabled] = useState(true);
-//   const [clientSecret, setClientSecret] = useState("");
-//   const stripe = useStripe();
-//   const elements = useElements();
-
-//   const cardStyle = {
-//     style: {
-//       base: {
-//         color: "#32325d",
-//         fontFamily: "Arial, sans-serif",
-//         fontSmoothing: "antialiased",
-//         fontSize: "16px",
-//         "::placeholder": {
-//           color: "#32325d",
-//         },
-//       },
-//       invalid: {
-//         color: "#fa755a",
-//         iconColor: "#fa755a",
-//       },
-//     },
-//   };
-
-//   const createPaymentIntent = async () => {
-//     try {
-//       const { data } = await axios.post(
-//         "/.netlify/functions/create-payment-intent",
-//         JSON.stringify({ cart, shipping_fee, total_amount })
-//       );
-//       setClientSecret(data.clientSecret);
-//     } catch (error) {
-//       console.log(error.response);
-//     }
-//   };
-
-//   useEffect(() => {
-//     if (stripeRef.current) {
-//       createPaymentIntent();
-//       stripeRef.current = false;
-//     }
-// eslint-disable-next-line
-//   }, []);
-
-//   const handleChange = async (e) => {
-//     setDisabled(e.empty);
-//     setError(e.error ? e.error.message : "");
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setProcessing(true);
-
-//     const payload = await stripe.confirmCardPayment(clientSecret, {
-//       payment_method: {
-//         card: elements.getElement(CardElement),
-//       },
-//     });
-
-//     if (payload.error) {
-//       setError(`Payment failed ${payload.error.message}`);
-//       setProcessing(false);
-//     } else {
-//       setError(null);
-//       setProcessing(false);
-//       setSucceeded(true);
-//       setTimeout(() => {
-//         clearCart();
-//         navigate("/");
-//       }, 5000);
-//     }
-//   };
-
-//   return (
-//     <div className="max-w-[900px] mx-auto pt-[16vh]">
-//       {succeeded ? (
-//         <article className="w-[100%] text-center">
-//           <h4>Thank You!</h4>
-//           <h4>Your payment was successful!</h4>
-//           Redirecting to Home Page shortly.
-//         </article>
-//       ) : (
-//         <article className="w-[100%] text-center">
-//           <h4 className="font-bold">Hello, {myUser?.name}</h4>
-//           <p>Your total is {formatPrice(shipping_fee + total_amount)}</p>
-//           <p>Test Card Number : 4242 4242 4242 4242</p>
-//         </article>
-//       )}
-
-//       <div className="w-fit mx-auto mt-8">
-//         <form id="payment-form" onSubmit={handleSubmit}>
-//           <CardElement
-//             id="card-element"
-//             options={cardStyle}
-//             onChange={handleChange}
-//           />
-//           <button disabled={processing || disabled || succeeded}>
-//             <span id="button-text">
-//               {processing ? (
-//                 <div className="spinner" id="spinner"></div>
-//               ) : (
-//                 "Pay"
-//               )}
-//             </span>
-//           </button>
-//           {/* Show any error that happens when processing the payment */}
-//           {error && (
-//             <div className="card-error" role="alert">
-//               {error}
-//             </div>
-//           )}
-
-// {
-/* Show a success message upon completion */
-// }
-// {
-/* <p className={succeeded ? "result-message" : "result-message hidden"}>
-            Payment Succeeded, see the result in your{" "}
-            <a
-              href={`https://dashboard.stripe.com/test/payments`}
-              style={{ textDecoration: "underline" }}
-            >
-              Stripe dashboard
-            </a>
-            . Refresh the page to pay again.
-          </p>
-        </form>
-      </div>
-    </div>
-  );
+  const cardStyle = {
+    style: {
+      base: {
+        color: "#32325d",
+        fontFamily: "Arial, sans-serif",
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#32325d",
+        },
+      },
+      invalid: {
+        color: "#fa755a",
+        iconColor: "#fa755a",
+      },
+    },
+  };
+  return <h2>Hello from Stripe Checkout</h2>;
 };
 
 const StripeCheckout = () => {
   return (
-    <section>
-      <StyledStripe>
-        <Elements stripe={promise}>
-          <CheckoutForm />
-        </Elements>
-      </StyledStripe>
-    </section>
+    <StyledStripe>
+      <Elements stripe={promise}>
+        <CheckoutForm />
+      </Elements>
+    </StyledStripe>
   );
-}; */
-// }
+};
 
-// const StyledStripe = styled.section`
-//   form {
-//     width: 30vw;
-//     min-width: 500px;
-//     align-self: center;
-//     box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
-//       0px 2px 5px 0px rgba(50, 50, 93, 0.1),
-//       0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
-//     border-radius: 7px;
-//     padding: 40px;
-//   }
-//   #payment-message {
-//     color: rgb(105, 115, 134);
-//     font-size: 16px;
-//     line-height: 20px;
-//     padding-top: 12px;
-//     text-align: center;
-//   }
-//   #payment-element {
-//     margin-bottom: 24px;
-//   }
-/* Buttons and links */
-/* button {
+const StyledStripe = styled.section`
+  form {
+    width: 30vw;
+    min-width: 500px;
+    align-self: center;
+    box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+      0px 2px 5px 0px rgba(50, 50, 93, 0.1),
+      0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+    border-radius: 7px;
+    padding: 40px;
+  }
+  #payment-message {
+    color: rgb(105, 115, 134);
+    font-size: 16px;
+    line-height: 20px;
+    padding-top: 12px;
+    text-align: center;
+  }
+  #payment-element {
+    margin-bottom: 24px;
+  }
+  /* Buttons and links */
+  button {
     background: #5469d4;
     font-family: Arial, sans-serif;
     color: #ffffff;
@@ -219,9 +119,9 @@ const StripeCheckout = () => {
   button:disabled {
     opacity: 0.5;
     cursor: default;
-  } */
-/* spinner/processing state, errors */
-/* .spinner,
+  }
+  /* spinner/processing state, errors */
+  .spinner,
   .spinner:before,
   .spinner:after {
     border-radius: 50%;
@@ -286,4 +186,4 @@ const StripeCheckout = () => {
   }
 `;
 
-export default StripeCheckout; */
+export default StripeCheckout;
