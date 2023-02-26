@@ -10,8 +10,6 @@ export type UserContextType = {
   ) => Promise<void>;
   logout: (options?: LogoutOptions | undefined) => void;
   user: User | undefined;
-  isAuthenticated: boolean;
-  isLoading: boolean;
 };
 
 // type for the children prop
@@ -23,8 +21,7 @@ type Props = {
 export const UserContext = React.createContext<UserContextType | null>(null);
 
 const UserProvider = ({ children }: Props) => {
-  const { loginWithRedirect, logout, user, isAuthenticated, isLoading } =
-    useAuth0();
+  const { loginWithRedirect, logout, user } = useAuth0();
 
   const [myUser, setMyUser] = useState<User | undefined | null>(null);
 
@@ -39,8 +36,6 @@ const UserProvider = ({ children }: Props) => {
         logout,
         myUser,
         user,
-        isAuthenticated,
-        isLoading,
       }}
     >
       {children}

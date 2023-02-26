@@ -2,8 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import ErrorPage from "../pages/error";
 import routes from "./config";
-
-// routes go into this file
+import PrivateRoute from "../pages/private-route/index";
+import Checkout from "../pages/checkout/index";
 
 const Router = () => {
   return (
@@ -21,14 +21,14 @@ const Router = () => {
           />
         );
       })}
-      {/* <Route
-            path="checkout"
-            element={
-              <PrivateRoute>
-                <Checkout />
-              </PrivateRoute>
-            }
-          /> */}
+      <Route
+        path="checkout"
+        element={
+          <PrivateRoute>
+            <Checkout />
+          </PrivateRoute>
+        }
+      />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
