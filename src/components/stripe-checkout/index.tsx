@@ -1,39 +1,35 @@
 import { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import { loadStripe } from "@stripe/stripe-js";
+import { useNavigate } from "react-router-dom";
+import { UserContextType } from "../../context/user-context/UserContext";
+import { useUserContext } from "../../context/user-context/UserContext";
+import { formatPrice } from "../../utils/helpers";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch } from "../../app/store";
+import {
+  getTotalAmount,
+  getShippingFee,
+  clearCart,
+} from "../../app/reducers/cartSlice";
 import {
   CardElement,
   useStripe,
   Elements,
   useElements,
 } from "@stripe/react-stripe-js";
-import axios from "axios";
-import {
-  getTotalAmount,
-  getShippingFee,
-  clearCart,
-} from "../../app/reducers/cartSlice";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../app/store";
-import { useUserContext } from "../../context/user-context/UserContext";
-import { formatPrice } from "../../utils/helpers";
-import { useNavigate } from "react-router-dom";
-import { UserContextType } from "../../context/user-context/UserContext";
+import { loadStripe } from "@stripe/stripe-js";
 import { StripeCardElementChangeEvent } from "@stripe/stripe-js";
-
-// const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY as string);
+import axios from "axios";
+import styled from "styled-components";
 
 const CheckoutForm = () => {
-  // cart states and dispatch
+  // cart states and dispatch, myUser, navigation variable
   const totalAmount = useSelector(getTotalAmount);
   const shipping = useSelector(getShippingFee);
   const dispatch = useDispatch<AppDispatch>();
-  // myUser state from userContext
   const { myUser } = useUserContext() as UserContextType;
-  // navitage function
   const navigate = useNavigate();
-  // fetching ref
+
+  // ref for the useEffect which invokes createPaymentIntent
   let stripeRef = useRef(true);
 
   // stripe states and variables
@@ -45,6 +41,7 @@ const CheckoutForm = () => {
   const stripe: any = useStripe();
   const elements: any = useElements();
 
+  // styling for the payment form
   const cardStyle = {
     style: {
       base: {
@@ -63,7 +60,8 @@ const CheckoutForm = () => {
     },
   };
 
-  //create payment intent
+  // create payment intent function
+  // tells stripe we're ready to pay
   const createPaymentIntent = async (): Promise<void> => {
     try {
       const { data } = await axios.post(
@@ -77,6 +75,7 @@ const CheckoutForm = () => {
   };
 
   // create payment intent useEffect
+  // useRef prevents setting up two intents
   useEffect(() => {
     if (stripeRef.current) {
       createPaymentIntent();
@@ -85,6 +84,7 @@ const CheckoutForm = () => {
     // eslint-disable-next-line
   }, []);
 
+  // handleChange and handleSubmit functions
   const handleChange = async (
     event: StripeCardElementChangeEvent
   ): Promise<void> => {
@@ -98,6 +98,8 @@ const CheckoutForm = () => {
     event.preventDefault();
     setProcessing(true);
 
+    // here we confirm the intent created with createPaymentIntent
+    // we pass the clientSecret and the payment method object
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -188,6 +190,7 @@ const StripeCheckout = () => {
   );
 };
 
+// Stripe's own styling
 const StyledStripe = styled.section`
   form {
     width: 30vw;
