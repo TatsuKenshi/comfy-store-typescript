@@ -9,7 +9,6 @@ import {
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 import {
-  getCart,
   getTotalAmount,
   getShippingFee,
   clearCart,
@@ -22,13 +21,11 @@ import { formatPrice } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { UserContextType } from "../../context/user-context/UserContext";
 import { StripeCardElementChangeEvent } from "@stripe/stripe-js";
-import { Link } from "react-router-dom";
 
-const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY as string);
+// const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY as string);
 
 const CheckoutForm = () => {
   // cart states and dispatch
-  const cart = useSelector(getCart);
   const totalAmount = useSelector(getTotalAmount);
   const shipping = useSelector(getShippingFee);
   const dispatch = useDispatch<AppDispatch>();
@@ -40,14 +37,13 @@ const CheckoutForm = () => {
   let stripeRef = useRef(true);
 
   // stripe states and variables
-  // inspect and retype error and processing states
   const [succeeded, setSucceeded] = useState<boolean>(false);
-  const [error, serError] = useState<null | string>(null);
+  const [error, setError] = useState<null | string>(null);
   const [processing, setProcessing] = useState<boolean | undefined>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [clientSecret, setClientSecret] = useState<string>("");
-  const stripe = useStripe();
-  const elements = useElements();
+  const stripe: any = useStripe();
+  const elements: any = useElements();
 
   const cardStyle = {
     style: {
@@ -68,13 +64,16 @@ const CheckoutForm = () => {
   };
 
   //create payment intent
-  const createPaymentIntent = async () => {
+  const createPaymentIntent = async (): Promise<void> => {
     try {
-      const data = await axios.post(
+      const { data } = await axios.post(
         "/.netlify/functions/create-payment-intent",
-        JSON.stringify({ cart, shipping, totalAmount })
+        JSON.stringify({ shipping, totalAmount })
       );
-    } catch (error) {}
+      setClientSecret(data.clientSecret);
+    } catch (error: any) {
+      console.log(error.response);
+    }
   };
 
   // create payment intent useEffect
@@ -83,15 +82,41 @@ const CheckoutForm = () => {
       createPaymentIntent();
       stripeRef.current = false;
     }
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = async (
     event: StripeCardElementChangeEvent
-  ): Promise<void> => {};
+  ): Promise<void> => {
+    setDisabled(event.empty);
+    setError(event.error ? event.error.message : "");
+  };
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {};
+  ): Promise<void> => {
+    event.preventDefault();
+    setProcessing(true);
+
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+      },
+    });
+
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`);
+      setProcessing(false);
+    } else {
+      setError(null);
+      setProcessing(false);
+      setSucceeded(true);
+      setTimeout(() => {
+        dispatch(clearCart());
+        navigate("/");
+      }, 5000);
+    }
+  };
 
   return (
     <div className="">
@@ -150,6 +175,10 @@ const CheckoutForm = () => {
 };
 
 const StripeCheckout = () => {
+  // eslint-disable-next-line
+  const [promise, setPromise] = useState(() =>
+    loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY as string)
+  );
   return (
     <StyledStripe>
       <Elements stripe={promise}>
