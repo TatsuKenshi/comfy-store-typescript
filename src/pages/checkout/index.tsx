@@ -4,6 +4,7 @@ import StripeCheckout from "../../components/stripe-checkout";
 import { useSelector } from "react-redux";
 import { getCart } from "../../app/reducers/cartSlice";
 import { Link } from "react-router-dom";
+import CookieConsent from "react-cookie-consent";
 
 const Checkout = () => {
   const cart = useSelector(getCart);
@@ -24,6 +25,22 @@ const Checkout = () => {
           <StripeCheckout />
         )}
       </div>
+      <CookieConsent
+        debug={true}
+        location="bottom"
+        style={{ background: "black", textAlign: "center" }}
+        buttonStyle={{
+          color: "black",
+          background: "green",
+          borderRadius: "20px",
+          fontSize: "1rem",
+        }}
+        buttonText="Alright!"
+        expires={1}
+      >
+        This Site Uses Cookies. Check out our{" "}
+        <a href="/about">privacy policy</a> for more info.
+      </CookieConsent>
     </section>
   );
 };

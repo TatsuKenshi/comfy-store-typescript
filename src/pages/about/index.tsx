@@ -1,5 +1,6 @@
 import hero from "../../assets/hero-bcg.jpeg";
 import PageHero from "../../components/page-hero";
+import CookieConsent from "react-cookie-consent";
 import "./index.scss";
 
 const About = () => {
@@ -26,6 +27,22 @@ const About = () => {
           </div>
         </article>
       </section>
+      <CookieConsent
+        debug={true}
+        location="bottom"
+        style={{ background: "black", textAlign: "center" }}
+        buttonStyle={{
+          color: "black",
+          background: "green",
+          borderRadius: "20px",
+          fontSize: "1rem",
+        }}
+        buttonText="Alright!"
+        expires={1}
+      >
+        This Site Uses Cookies. Check out our{" "}
+        <a href="/about">privacy policy</a> for more info.
+      </CookieConsent>
     </main>
   );
 };

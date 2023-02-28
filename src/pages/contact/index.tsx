@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageHero from "../../components/page-hero";
 import { useForm } from "react-hook-form";
+import CookieConsent from "react-cookie-consent";
 
 const Contact = () => {
   const [messageSent, setMessageSent] = useState<string>("");
@@ -118,6 +119,22 @@ const Contact = () => {
           </div>
         </form>
       </div>
+      <CookieConsent
+        debug={true}
+        location="bottom"
+        style={{ background: "black", textAlign: "center" }}
+        buttonStyle={{
+          color: "black",
+          background: "green",
+          borderRadius: "20px",
+          fontSize: "1rem",
+        }}
+        buttonText="Alright!"
+        expires={1}
+      >
+        This Site Uses Cookies. Check out our{" "}
+        <a href="/about">privacy policy</a> for more info.
+      </CookieConsent>
     </section>
   );
 };

@@ -17,6 +17,7 @@ import ProductImages from "../../components/product-images";
 import Stars from "../../components/stars";
 import AddToCart from "../../components/add-to-cart";
 import SimilarProducts from "../../components/similar-products";
+import CookieConsent from "react-cookie-consent";
 import "./index.scss";
 
 const SingleProduct = () => {
@@ -51,7 +52,27 @@ const SingleProduct = () => {
 
   // error return
   if (productError) {
-    return <ErrorComponent />;
+    return (
+      <>
+        <ErrorComponent />
+        <CookieConsent
+          debug={true}
+          location="bottom"
+          style={{ background: "black", textAlign: "center" }}
+          buttonStyle={{
+            color: "black",
+            background: "green",
+            borderRadius: "20px",
+            fontSize: "1rem",
+          }}
+          buttonText="Alright!"
+          expires={1}
+        >
+          This Site Uses Cookies. Check out our{" "}
+          <a href="/about">privacy policy</a> for more info.
+        </CookieConsent>
+      </>
+    );
   }
 
   const {
@@ -104,6 +125,22 @@ const SingleProduct = () => {
       <div>
         <SimilarProducts />
       </div>
+      <CookieConsent
+        debug={true}
+        location="bottom"
+        style={{ background: "black", textAlign: "center" }}
+        buttonStyle={{
+          color: "black",
+          background: "green",
+          borderRadius: "20px",
+          fontSize: "1rem",
+        }}
+        buttonText="Alright!"
+        expires={1}
+      >
+        This Site Uses Cookies. Check out our{" "}
+        <a href="/about">privacy policy</a> for more info.
+      </CookieConsent>
     </section>
   );
 };
