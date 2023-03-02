@@ -11,16 +11,17 @@ import { AppDispatch } from "../../app/store";
 import { getUniqueValues } from "../../utils/helpers";
 import { FaCheck, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { formatPrice } from "../../utils/helpers";
+import useFilters from "../../hooks/useFilters";
 
 const Filters = () => {
-  // get and destructure filters and products from the ProductsSlice
-  const filters = useSelector(getFilters);
+  // filtering and dispatching functions and variables
+  const { myFilters } = useFilters();
   const { text, company, color, min_price, price, max_price, shipping } =
-    filters;
-  const products = useSelector(getAllProducts);
+    useSelector(getFilters);
   const dispatch = useDispatch<AppDispatch>();
 
-  // variables for unique categories, colors, and companies
+  // variables for unique categories, colors, and companies for the filter form
+  const products = useSelector(getAllProducts);
   const categories = getUniqueValues(products, "category");
   const colors = getUniqueValues(products, "colors");
   const companies = getUniqueValues(products, "company");
@@ -37,36 +38,6 @@ const Filters = () => {
   const [showColor, setShowColor] = useState<boolean>(false);
   const [showPrice, setShowPrice] = useState<boolean>(false);
   const [showShipping, setShowShipping] = useState<boolean>(false);
-
-  // myFilters determines the filter name and value
-  // to avoid dispatching non-serializable data in reducer
-  // dispatches the updateFiltersState action with needed values
-  // fix event prop (myFilterValues) typing for this function
-  // button events don't have regular target properties
-  // https://freshman.tech/snippets/typescript/fix-value-not-exist-eventtarget/
-  const myFilters = (myFilterValues: any): void => {
-    const name: string = myFilterValues.target.name;
-    let value: number | string | boolean = myFilterValues.target.value;
-
-    if (name === "category") {
-      value = myFilterValues.target.textContent;
-    }
-    if (name === "color") {
-      value = myFilterValues.target.dataset.color;
-    }
-    if (name === "price") {
-      value = Number(value);
-    }
-    if (name === "shipping") {
-      value = myFilterValues.target.checked;
-    }
-    dispatch(updateFiltersState({ name, value }));
-  };
-
-  // useEffect dispatches setFilters action which will iterate over the all products array (and set the filtered_products array to what's left of it). setFilters work according to the changes in the filters state made by the updateFiltersState action (sends the name of the relevant input and its value to the ProductsSlice, where the corresponding filter state gets updated).
-  useEffect(() => {
-    dispatch(setFilters(products));
-  }, [dispatch, products, filters]);
 
   // useEffect adds and removes window resize event
   useEffect(() => {
@@ -163,7 +134,7 @@ const Filters = () => {
                   placeholder="type here..."
                   className="search-input"
                   value={text}
-                  onChange={(e) => myFilters(e)}
+                  onChange={myFilters}
                 />
               </div>
             )}
@@ -199,7 +170,7 @@ const Filters = () => {
                       className=""
                       type="button"
                       name="category"
-                      onClick={(e) => myFilters(e)}
+                      onClick={myFilters}
                     >
                       {cat}
                     </button>
@@ -235,7 +206,7 @@ const Filters = () => {
                 <select
                   name="company"
                   value={company}
-                  onChange={(e) => myFilters(e)}
+                  onChange={myFilters}
                   className=""
                 >
                   {companies.map((comp, index) => {
@@ -279,7 +250,7 @@ const Filters = () => {
                       <button
                         key={index}
                         name="color"
-                        onClick={(e) => myFilters(e)}
+                        onClick={myFilters}
                         data-color="all"
                         className=""
                         style={{
@@ -306,7 +277,7 @@ const Filters = () => {
                         borderRadius: "50%",
                         color: "white",
                       }}
-                      onClick={(e) => myFilters(e)}
+                      onClick={myFilters}
                     >
                       {color === col.toLowerCase() ? (
                         <FaCheck className="" />
@@ -345,7 +316,7 @@ const Filters = () => {
                 <input
                   type="range"
                   name="price"
-                  onChange={(e) => myFilters(e)}
+                  onChange={myFilters}
                   min={min_price}
                   max={max_price}
                   value={price}
@@ -385,7 +356,7 @@ const Filters = () => {
                   type="checkbox"
                   name="shipping"
                   id="shipping"
-                  onChange={(e) => myFilters(e)}
+                  onChange={myFilters}
                   checked={shipping}
                 />
               </div>
