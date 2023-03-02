@@ -1,13 +1,9 @@
 import "./index.scss";
 import { Navigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { ChildrenPropType } from "../types";
 
-// type for the children prop
-type Props = {
-  children: React.ReactNode;
-};
-
-const PrivateRoute = ({ children }: Props) => {
+const PrivateRoute = ({ children }: ChildrenPropType) => {
   const { user } = useAuth0();
 
   if (!user) {

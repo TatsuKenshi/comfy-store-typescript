@@ -1,11 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { ChildrenPropType } from "../types";
 
-// type for the children prop
-type Props = {
-  children: React.ReactElement;
-};
-
-const AuthWrapper = ({ children }: Props) => {
+const AuthWrapper = ({ children }: ChildrenPropType) => {
   const { isLoading, error } = useAuth0();
 
   if (isLoading) {
