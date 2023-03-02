@@ -11,37 +11,31 @@ const routes = [
   {
     id: 0,
     path: "/",
-    folder: "home",
     element: Home,
   },
   {
     id: 1,
     path: "about",
-    folder: "about",
     element: About,
   },
   {
     id: 2,
     path: "products",
-    folder: "products",
     element: Products,
   },
   {
     id: 3,
     path: "contact",
-    folder: "contact",
     element: Contact,
   },
   {
     id: 4,
     path: "products/:id",
-    folder: "single-product",
     element: SingleProduct,
   },
   {
     id: 5,
     path: "cart",
-    folder: "cart",
     element: Cart,
   },
 ];
