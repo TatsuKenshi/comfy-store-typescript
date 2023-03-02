@@ -1,8 +1,5 @@
-import { useState, useEffect } from "react";
 import {
   getFilters,
-  setFilters,
-  updateFiltersState,
   clearFilters,
   getAllProducts,
 } from "../../app/reducers/productsSlice";
@@ -12,10 +9,29 @@ import { getUniqueValues } from "../../utils/helpers";
 import { FaCheck, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { formatPrice } from "../../utils/helpers";
 import useFilters from "../../hooks/useFilters";
+import useResize from "../../hooks/useResize";
 
 const Filters = () => {
-  // filtering and dispatching functions and variables
+  // filtering, screen size, and dispatching functions and variables
   const { myFilters } = useFilters();
+  const {
+    windowSize,
+    expandForm,
+    setExpandForm,
+    showSearch,
+    setShowSearch,
+    showCategory,
+    setShowCategory,
+    showCompany,
+    setShowCompany,
+    showColor,
+    setShowColor,
+    showPrice,
+    setShowPrice,
+    showShipping,
+    setShowShipping,
+  } = useResize();
+
   const { text, company, color, min_price, price, max_price, shipping } =
     useSelector(getFilters);
   const dispatch = useDispatch<AppDispatch>();
@@ -26,52 +42,13 @@ const Filters = () => {
   const colors = getUniqueValues(products, "colors");
   const companies = getUniqueValues(products, "company");
 
-  // filter section visibility states for small screens
-  // size tracks the window width
-  const [size, setSize] = useState<number>(window.innerWidth);
-  // expandForm tracks the visibility of the entire form
-  const [expandForm, setExpandForm] = useState<boolean>(false);
-  // states to track individual parts of the form
-  const [showSearch, setShowSearch] = useState<boolean>(false);
-  const [showCategory, setShowCategory] = useState<boolean>(false);
-  const [showCompany, setShowCompany] = useState<boolean>(false);
-  const [showColor, setShowColor] = useState<boolean>(false);
-  const [showPrice, setShowPrice] = useState<boolean>(false);
-  const [showShipping, setShowShipping] = useState<boolean>(false);
-
-  // useEffect adds and removes window resize event
-  useEffect(() => {
-    window.addEventListener("resize", () => setSize(window.innerWidth));
-
-    if (size >= 1025) {
-      setExpandForm(true);
-      setShowSearch(true);
-      setShowCategory(true);
-      setShowCompany(true);
-      setShowColor(true);
-      setShowPrice(true);
-      setShowShipping(true);
-    } else {
-      setExpandForm(false);
-      setShowSearch(false);
-      setShowCategory(false);
-      setShowCompany(false);
-      setShowColor(false);
-      setShowPrice(false);
-      setShowShipping(false);
-    }
-
-    return () =>
-      window.removeEventListener("resize", () => setSize(window.innerWidth));
-  }, [size]);
-
   return (
     <section>
       <div className="">
         <h3 className="">Filters</h3>
 
         {/* main show/hide toggle button */}
-        {size < 1025 && (
+        {windowSize < 1025 && (
           <button
             className=""
             onClick={() => {
@@ -110,7 +87,7 @@ const Filters = () => {
           <div className="form-control">
             <div>
               <span className="">Search</span>
-              {size < 1025 && (
+              {windowSize < 1025 && (
                 <button
                   className=""
                   onClick={() => {
@@ -145,7 +122,7 @@ const Filters = () => {
           <div className="">
             <div className="">
               <h5 className="">Category</h5>
-              {size < 1025 && (
+              {windowSize < 1025 && (
                 <button
                   className=""
                   onClick={() => {
@@ -185,7 +162,7 @@ const Filters = () => {
           <div className="">
             <div className="">
               <h5 className="">Company</h5>
-              {size < 1025 && (
+              {windowSize < 1025 && (
                 <button
                   className=""
                   onClick={() => {
@@ -226,7 +203,7 @@ const Filters = () => {
           <div className="">
             <div className="">
               <h5 className="">Color</h5>
-              {size < 1025 && (
+              {windowSize < 1025 && (
                 <button
                   className=""
                   onClick={() => {
@@ -294,7 +271,7 @@ const Filters = () => {
           <div className="">
             <div className="">
               <h5 className="">Price</h5>
-              {size < 1025 && (
+              {windowSize < 1025 && (
                 <button
                   className=""
                   onClick={() => {
@@ -331,7 +308,7 @@ const Filters = () => {
           <div className="">
             <div className="">
               <h5 className="">Shipping Options</h5>
-              {size < 1025 && (
+              {windowSize < 1025 && (
                 <button
                   className=""
                   onClick={() => {
