@@ -81,6 +81,10 @@ const Contact = () => {
                 id="email"
                 {...register("email", {
                   required: "A valid email Address is required",
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: "Entered value does not match the email format.",
+                  },
                 })}
                 aria-invalid={errors.email ? "true" : "false"}
                 className=""
