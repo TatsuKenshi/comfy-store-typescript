@@ -1,6 +1,8 @@
+import React from "react";
 import { getSimilarProducts } from "../../app/reducers/productsSlice";
-import Product from "../product";
 import { useSelector } from "react-redux";
+
+const Product = React.lazy(() => import("../../components/product"));
 
 const SimilarProducts = () => {
   const products = useSelector(getSimilarProducts);

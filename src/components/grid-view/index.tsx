@@ -1,5 +1,7 @@
+import React from "react";
 import { GridViewTypes } from "../types";
-import Product from "../product";
+
+const Product = React.lazy(() => import("../../components/product"));
 
 const GridView = ({ products }: GridViewTypes) => {
   return (

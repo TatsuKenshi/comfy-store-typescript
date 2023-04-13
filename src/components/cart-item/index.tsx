@@ -1,10 +1,14 @@
+import React from "react";
 import { CartProductType } from "../../app/types";
 import { formatPrice } from "../../utils/helpers";
 import { FaTrash } from "react-icons/fa";
-import AmountButtons from "../amount-buttons/index";
 import { removeItem, toggleAmount } from "../../app/reducers/cartSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
+
+const AmountButtons = React.lazy(
+  () => import("../../components/amount-buttons")
+);
 
 const CartItem = (item: CartProductType) => {
   const { id, image, name, color, price, amount } = item;

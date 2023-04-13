@@ -1,6 +1,4 @@
-import Product from "../product";
-import Loading from "../loading";
-import ErrorComponent from "../error";
+import React from "react";
 import {
   getFeaturedProducts,
   getAllProductsLoading,
@@ -9,6 +7,10 @@ import {
 import { useSelector } from "react-redux";
 import { ProductType } from "../../app/types";
 import { Link } from "react-router-dom";
+
+const Product = React.lazy(() => import("../../components/product"));
+const Loading = React.lazy(() => import("../../components/loading"));
+const ErrorComponent = React.lazy(() => import("../../components/error"));
 
 const FeaturedProducts = () => {
   const products = useSelector(getFeaturedProducts);

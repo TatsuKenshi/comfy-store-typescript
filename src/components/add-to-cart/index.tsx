@@ -1,11 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
-import AmountButtons from "../amount-buttons/index";
 import { AddToCartTypes } from "../types";
 import { addToCart } from "../../app/reducers/cartSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
+
+const AmountButtons = React.lazy(
+  () => import("../../components/amount-buttons")
+);
 
 const AddToCart = ({ product }: AddToCartTypes) => {
   // cartSlice variables for dispatching addToCart action

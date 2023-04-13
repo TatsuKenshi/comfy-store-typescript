@@ -1,10 +1,12 @@
-import GridView from "../grid-view";
-import ListView from "../list-view";
+import React from "react";
 import {
   getFilteredProducts,
   getGridView,
 } from "../../app/reducers/productsSlice";
 import { useSelector } from "react-redux";
+
+const GridView = React.lazy(() => import("../../components/grid-view"));
+const ListView = React.lazy(() => import("../../components/list-view"));
 
 const ProductsList = () => {
   const products = useSelector(getFilteredProducts);

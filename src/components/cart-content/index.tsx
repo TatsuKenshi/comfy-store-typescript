@@ -1,10 +1,12 @@
+import React from "react";
 import { getCart, clearCart } from "../../app/reducers/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
 import { Link } from "react-router-dom";
-import CartColumns from "../cart-columns";
-import CartItem from "../cart-item";
-import CartTotals from "../cart-totals";
+
+const CartColumns = React.lazy(() => import("../../components/cart-columns"));
+const CartItem = React.lazy(() => import("../../components/cart-item"));
+const CartTotals = React.lazy(() => import("../../components/cart-totals"));
 
 const CartContent = () => {
   const cart = useSelector(getCart);
