@@ -49,7 +49,16 @@ const Navbar = () => {
           })}
           {myUser && (
             <li className="">
-              <NavLink to="/checkout" className="">
+              <NavLink
+                to="/checkout"
+                className=""
+                style={{
+                  textDecoration: "none",
+                  fontSize: "1.5rem",
+                  color: "black",
+                  textTransform: "capitalize",
+                }}
+              >
                 Checkout
               </NavLink>
             </li>
