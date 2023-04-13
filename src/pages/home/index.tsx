@@ -1,9 +1,13 @@
-import HomeHero from "../../components/home-hero";
-import FeaturedProducts from "../../components/featured-products";
-import Mission from "../../components/mission";
-import ContactSection from "../../components/contact";
+import React from "react";
 import CookieConsent from "react-cookie-consent";
 import "./index.scss";
+
+const HomeHero = React.lazy(() => import("../../components/home-hero"));
+const Mission = React.lazy(() => import("../../components/mission"));
+const ContactSection = React.lazy(() => import("../../components/contact"));
+const FeaturedProducts = React.lazy(
+  () => import("../../components/featured-products")
+);
 
 const Home = () => {
   return (
