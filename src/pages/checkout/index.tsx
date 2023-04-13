@@ -1,10 +1,12 @@
+import React from "react";
 import "./index.scss";
-import PageHero from "../../components/page-hero";
 import StripeCheckout from "../../components/stripe-checkout";
 import { useSelector } from "react-redux";
 import { getCart } from "../../app/reducers/cartSlice";
 import { Link } from "react-router-dom";
 import CookieConsent from "react-cookie-consent";
+
+const PageHero = React.lazy(() => import("../../components/page-hero"));
 
 const Checkout = () => {
   const cart = useSelector(getCart);

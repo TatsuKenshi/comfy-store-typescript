@@ -1,9 +1,11 @@
+import React from "react";
 import "./index.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PageHero from "../../components/page-hero";
 import { useForm } from "react-hook-form";
 import CookieConsent from "react-cookie-consent";
+
+const PageHero = React.lazy(() => import("../../components/page-hero"));
 
 const Contact = () => {
   const [messageSent, setMessageSent] = useState<string>("");

@@ -1,9 +1,11 @@
+import React from "react";
 import "./index.scss";
-import PageHero from "../../components/page-hero";
-import Filters from "../../components/filters";
-import Sort from "../../components/sort";
-import ProductsList from "../../components/products-list";
 import CookieConsent from "react-cookie-consent";
+
+const PageHero = React.lazy(() => import("../../components/page-hero"));
+const Filters = React.lazy(() => import("../../components/filters"));
+const Sort = React.lazy(() => import("../../components/sort"));
+const ProductsList = React.lazy(() => import("../../components/products-list"));
 
 const Products = () => {
   return (

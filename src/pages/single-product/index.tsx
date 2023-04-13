@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../app/store";
@@ -10,15 +10,20 @@ import {
 } from "../../app/reducers/productsSlice";
 import { single_product_url as url } from "../../utils/constants";
 import { capitalizeTitle, formatPrice } from "../../utils/helpers";
-import Loading from "../../components/loading";
-import ErrorComponent from "../../components/error";
-import PageHero from "../../components/page-hero";
-import ProductImages from "../../components/product-images";
-import Stars from "../../components/stars";
-import AddToCart from "../../components/add-to-cart";
-import SimilarProducts from "../../components/similar-products";
 import CookieConsent from "react-cookie-consent";
 import "./index.scss";
+
+const PageHero = React.lazy(() => import("../../components/page-hero"));
+const Loading = React.lazy(() => import("../../components/loading"));
+const ErrorComponent = React.lazy(() => import("../../components/error"));
+const ProductImages = React.lazy(
+  () => import("../../components/product-images")
+);
+const Stars = React.lazy(() => import("../../components/stars"));
+const AddToCart = React.lazy(() => import("../../components/add-to-cart"));
+const SimilarProducts = React.lazy(
+  () => import("../../components/similar-products")
+);
 
 const SingleProduct = () => {
   // action dispatch, navigation, url param variables

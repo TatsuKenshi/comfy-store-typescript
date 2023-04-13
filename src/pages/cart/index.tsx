@@ -1,10 +1,12 @@
+import React from "react";
 import { getCart } from "../../app/reducers/cartSlice";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import PageHero from "../../components/page-hero";
-import CartContent from "../../components/cart-content";
 import CookieConsent from "react-cookie-consent";
 import "./index.scss";
+
+const PageHero = React.lazy(() => import("../../components/page-hero"));
+const CartContent = React.lazy(() => import("../../components/cart-content"));
 
 const Cart = () => {
   const cart = useSelector(getCart);

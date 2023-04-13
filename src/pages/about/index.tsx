@@ -1,7 +1,9 @@
+import React from "react";
 import hero from "../../assets/hero-bcg.jpeg";
-import PageHero from "../../components/page-hero";
 import CookieConsent from "react-cookie-consent";
 import "./index.scss";
+
+const PageHero = React.lazy(() => import("../../components/page-hero"));
 
 const About = () => {
   return (
