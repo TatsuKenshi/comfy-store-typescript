@@ -9,7 +9,7 @@ const Product = (product: ProductType) => {
   return (
     <div>
       <div className="container">
-        <img src={image} alt={name} height="70px" width="100px" />
+        <img src={image} alt={name} height="90px" width="135px" />
         <Link to={`/products/${id}`} className="link">
           <div>
             <FaSearch />
