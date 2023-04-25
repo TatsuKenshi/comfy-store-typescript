@@ -1,19 +1,76 @@
-const Footer = () => {
+import { Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
+
+const Footer = ({ t }: any) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        paddingTop: "2rem",
-        paddingBottom: "2rem",
-        backgroundColor: "skyblue",
-      }}
-    >
-      <h5 style={{ marginRight: "1rem" }}>&copy; {new Date().getFullYear()}</h5>
-      <span style={{ marginRight: "1rem" }}>ComfySloth</span>
-      <h5>All Rights Reserved</h5>
-    </div>
+    <footer className="p-8 bg-sky-900 text-white">
+      {/* content section */}
+      <section
+        className="max-w-[1200px] mx-auto h-full flex flex-wrap"
+        style={{ display: "flex" }}
+      >
+        <div className="w-full md:w-1/2 lg:w-1/4 mb-12 md:mb-8">
+          <h4>{t("FooterName")}</h4>
+          <div className="h-[4px] w-full md:w-11/12 max-w-[1200px] bg-yellow-700 bg-opacity-70 my-2"></div>
+        </div>
+        <div className="w-full md:w-1/2 lg:w-1/4 mb-12 md:mb-8">
+          <h4>{t("FooterAbout")}</h4>
+          <div className="h-[4px] w-full md:w-11/12 max-w-[1200px] bg-yellow-700 bg-opacity-70 my-2"></div>
+          <p>
+            {t("FooterCompanySeat")} <br /> {t("FooterCompanyAddress")}
+          </p>
+          <p>
+            {t("FooterHours")}
+            <br />
+            {t("FooterHoursDisplay")}
+          </p>
+        </div>
+        <div className="w-full md:w-1/2 lg:w-1/4 mb-12 md:mb-8">
+          <h4>{t("FooterContact")}</h4>
+          <div className="h-[4px] w-full md:w-11/12 max-w-[1200px] bg-yellow-700 bg-opacity-70 my-2"></div>
+          <p>
+            {t("FooterContactPhone")} <br />
+            +381 66 426 624
+          </p>
+          <p>
+            {t("FooterContactEmail")}
+            <br />
+            {t("FooterContactEmailDisplay")}
+            <br />
+            {t("FooterContactEmailDisplay2")}
+          </p>
+        </div>
+
+        {/* links section */}
+        <div className="w-full md:w-1/2 lg:w-1/4 mb-12 md:mb-8">
+          <h4>Linkovi</h4>
+          <div className="h-[4px] w-full md:w-11/12 max-w-[1200px] bg-yellow-700 bg-opacity-70 my-2"></div>
+          <p>
+            <Link to="/">{t("Home")}</Link>
+          </p>
+          <p>
+            <Link to="/services">{t("Services")}</Link>
+          </p>
+          <p>
+            <Link to="/contact">{t("Contact")}</Link>
+          </p>
+          <p>
+            <Link to="/terms">{t("Terms")}</Link>
+          </p>
+        </div>
+        <div className="h-[4px] w-full max-w-[1200px] bg-yellow-700 bg-opacity-70 mx-auto my-2"></div>
+      </section>
+
+      {/* copyright section */}
+      <section className="max-w-[1200px] mx-auto text-center">
+        <h5 className="mr-1">
+          &copy; {new Date().getFullYear()}
+          <span className="ml-1">Sara Akerman</span>
+        </h5>
+        <h5 className="ml-1">All rights reserved.</h5>
+      </section>
+    </footer>
   );
 };
 
-export default Footer;
+export default withTranslation()(Footer);
