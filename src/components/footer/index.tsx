@@ -3,19 +3,16 @@ import { withTranslation } from "react-i18next";
 
 const Footer = ({ t }: any) => {
   return (
-    <footer className="p-8 bg-sky-900 text-white">
+    <footer className="">
       {/* content section */}
-      <section
-        className="max-w-[1200px] mx-auto h-full flex flex-wrap"
-        style={{ display: "flex" }}
-      >
-        <div className="w-full md:w-1/2 lg:w-1/4 mb-12 md:mb-8">
+      <section className="" style={{ display: "flex" }}>
+        <div className="">
           <h4>{t("FooterName")}</h4>
-          <div className="h-[4px] w-full md:w-11/12 max-w-[1200px] bg-yellow-700 bg-opacity-70 my-2"></div>
+          <div className=""></div>
         </div>
-        <div className="w-full md:w-1/2 lg:w-1/4 mb-12 md:mb-8">
+        <div className="">
           <h4>{t("FooterAbout")}</h4>
-          <div className="h-[4px] w-full md:w-11/12 max-w-[1200px] bg-yellow-700 bg-opacity-70 my-2"></div>
+          <div className=""></div>
           <p>
             {t("FooterCompanySeat")} <br /> {t("FooterCompanyAddress")}
           </p>
@@ -25,9 +22,9 @@ const Footer = ({ t }: any) => {
             {t("FooterHoursDisplay")}
           </p>
         </div>
-        <div className="w-full md:w-1/2 lg:w-1/4 mb-12 md:mb-8">
+        <div className="">
           <h4>{t("FooterContact")}</h4>
-          <div className="h-[4px] w-full md:w-11/12 max-w-[1200px] bg-yellow-700 bg-opacity-70 my-2"></div>
+          <div className=""></div>
           <p>
             {t("FooterContactPhone")} <br />
             +381 66 426 624
@@ -42,9 +39,9 @@ const Footer = ({ t }: any) => {
         </div>
 
         {/* links section */}
-        <div className="w-full md:w-1/2 lg:w-1/4 mb-12 md:mb-8">
+        <div className="">
           <h4>Linkovi</h4>
-          <div className="h-[4px] w-full md:w-11/12 max-w-[1200px] bg-yellow-700 bg-opacity-70 my-2"></div>
+          <div className=""></div>
           <p>
             <Link to="/">{t("Home")}</Link>
           </p>
@@ -68,16 +65,16 @@ const Footer = ({ t }: any) => {
             <Link to="/checkout">{t("Checkout")}</Link>
           </p>
         </div>
-        <div className="h-[4px] w-full max-w-[1200px] bg-yellow-700 bg-opacity-70 mx-auto my-2"></div>
+        <div className=""></div>
       </section>
 
       {/* copyright section */}
-      <section className="max-w-[1200px] mx-auto text-center">
-        <h5 className="mr-1">
+      <section className="">
+        <h5 className="">
           &copy; {new Date().getFullYear()}
-          <span className="ml-1">Sara Akerman</span>
+          <span className="">Sara Akerman</span>
         </h5>
-        <h5 className="ml-1">All rights reserved.</h5>
+        <h5 className="">All rights reserved.</h5>
       </section>
     </footer>
   );
