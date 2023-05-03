@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import hero from "../../assets/hero-bcg.jpeg";
 import CookieConsent from "react-cookie-consent";
+import usePageTitle from "../../hooks/usePageTitle";
+import i18n from "../../translation";
 import "./index.scss";
 
 const PageHero = React.lazy(() => import("../../components/page-hero"));
 
 const About = () => {
+  // page title customization and localization
+  const { changeTitle } = usePageTitle();
+  const language = i18n.language;
+
+  useEffect(() => {
+    changeTitle({ language: language, enTitle: "About", srTitle: "O nama" });
+  }, [language, changeTitle]);
+
   return (
     <main className="">
       <PageHero title="About" />

@@ -11,6 +11,8 @@ import {
 import { single_product_url as url } from "../../utils/constants";
 import { capitalizeTitle, formatPrice } from "../../utils/helpers";
 import CookieConsent from "react-cookie-consent";
+import usePageTitle from "../../hooks/usePageTitle";
+import i18n from "../../translation";
 import "./index.scss";
 
 const PageHero = React.lazy(() => import("../../components/page-hero"));
@@ -49,6 +51,18 @@ const SingleProduct = () => {
       }, 3000);
     }
   }, [productError, navigate]);
+
+  // page title customization and localization
+  const { changeTitle } = usePageTitle();
+  const language = i18n.language;
+
+  useEffect(() => {
+    changeTitle({
+      language: language,
+      enTitle: "About",
+      srTitle: product?.name,
+    });
+  }, [language, changeTitle, product?.name]);
 
   // loading return
   if (productLoading) {

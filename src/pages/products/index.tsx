@@ -1,6 +1,8 @@
-import React from "react";
-import "./index.scss";
+import React, { useEffect } from "react";
+import usePageTitle from "../../hooks/usePageTitle";
+import i18n from "../../translation";
 import CookieConsent from "react-cookie-consent";
+import "./index.scss";
 
 const PageHero = React.lazy(() => import("../../components/page-hero"));
 const Filters = React.lazy(() => import("../../components/filters"));
@@ -8,6 +10,18 @@ const Sort = React.lazy(() => import("../../components/sort"));
 const ProductsList = React.lazy(() => import("../../components/products-list"));
 
 const Products = () => {
+  // page title customization and localization
+  const { changeTitle } = usePageTitle();
+  const language = i18n.language;
+
+  useEffect(() => {
+    changeTitle({
+      language: language,
+      enTitle: "Products",
+      srTitle: "Proizvodi",
+    });
+  }, [language, changeTitle]);
+
   return (
     <section>
       <PageHero title="Products" />

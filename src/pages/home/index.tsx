@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CookieConsent from "react-cookie-consent";
+import usePageTitle from "../../hooks/usePageTitle";
+import i18n from "../../translation";
 import "./index.scss";
 
 const HomeHero = React.lazy(() => import("../../components/home-hero"));
@@ -10,6 +12,14 @@ const FeaturedProducts = React.lazy(
 );
 
 const Home = () => {
+  // page title customization and localization
+  const { changeTitle } = usePageTitle();
+  const language = i18n.language;
+
+  useEffect(() => {
+    changeTitle({ language: language, enTitle: "Home", srTitle: "Početna" });
+  }, [language, changeTitle]);
+
   return (
     <main>
       <HomeHero />

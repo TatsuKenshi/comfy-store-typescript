@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { getCart } from "../../app/reducers/cartSlice";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CookieConsent from "react-cookie-consent";
+import usePageTitle from "../../hooks/usePageTitle";
+import i18n from "../../translation";
 import "./index.scss";
 
 const PageHero = React.lazy(() => import("../../components/page-hero"));
@@ -10,6 +12,14 @@ const CartContent = React.lazy(() => import("../../components/cart-content"));
 
 const Cart = () => {
   const cart = useSelector(getCart);
+
+  // page title customization and localization
+  const { changeTitle } = usePageTitle();
+  const language = i18n.language;
+
+  useEffect(() => {
+    changeTitle({ language: language, enTitle: "Cart", srTitle: "Korpa" });
+  }, [language, changeTitle]);
 
   if (cart.length < 1) {
     return (

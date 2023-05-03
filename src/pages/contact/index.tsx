@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.scss";
+import usePageTitle from "../../hooks/usePageTitle";
+import i18n from "../../translation";
 import CookieConsent from "react-cookie-consent";
 
 const PageHero = React.lazy(() => import("../../components/page-hero"));
 const ContactForm = React.lazy(() => import("../../components/contact-form"));
 
 const Contact = () => {
+  // page title customization and localization
+  const { changeTitle } = usePageTitle();
+  const language = i18n.language;
+
+  useEffect(() => {
+    changeTitle({ language: language, enTitle: "Contact", srTitle: "Kontakt" });
+  }, [language, changeTitle]);
+
   return (
     <section>
       <PageHero title={"Contact"} />

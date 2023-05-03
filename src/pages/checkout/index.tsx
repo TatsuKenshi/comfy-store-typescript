@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.scss";
 import StripeCheckout from "../../components/stripe-checkout";
 import PageHero from "../../components/page-hero";
 import { useSelector } from "react-redux";
 import { getCart } from "../../app/reducers/cartSlice";
 import { Link } from "react-router-dom";
+import usePageTitle from "../../hooks/usePageTitle";
+import i18n from "../../translation";
 import CookieConsent from "react-cookie-consent";
 
 const Checkout = () => {
   const cart = useSelector(getCart);
+
+  // page title customization and localization
+  const { changeTitle } = usePageTitle();
+  const language = i18n.language;
+
+  useEffect(() => {
+    changeTitle({ language: language, enTitle: "Checkout", srTitle: "Kasa" });
+  }, [language, changeTitle]);
 
   return (
     <section>
