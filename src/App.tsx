@@ -9,6 +9,7 @@ import { AppDispatch } from "./app/store";
 import { fetchAllProducts } from "./app/reducers/productsSlice";
 import { products_url as url } from "./utils/constants";
 import { getCart, countCartTotals } from "./app/reducers/cartSlice";
+import ScrollReset from "./components/scroll-reset";
 
 function App() {
   let fetchRef = useRef(true);
@@ -33,10 +34,12 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
-        <Sidebar />
-        <Router />
-        <Footer />
+        <ScrollReset>
+          <Navbar />
+          <Sidebar />
+          <Router />
+          <Footer />
+        </ScrollReset>
       </BrowserRouter>
     </div>
   );
