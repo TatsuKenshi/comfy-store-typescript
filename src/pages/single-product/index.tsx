@@ -59,7 +59,7 @@ const SingleProduct = () => {
   useEffect(() => {
     changeTitle({
       language: language,
-      enTitle: "About",
+      enTitle: product?.name,
       srTitle: product?.name,
     });
   }, [language, changeTitle, product?.name]);
