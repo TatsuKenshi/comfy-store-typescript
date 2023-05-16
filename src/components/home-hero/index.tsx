@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import heroBcg from "../../assets/hero-bcg.jpeg";
+import heroBcgPlaceholder from "../../assets/heroBcgPlaceHolder.jpg";
 import heroBcg2 from "../../assets/hero-bcg-2.jpeg";
+import heroBcgPlaceholder2 from "../../assets/heroBcgPlaceholder2.jpeg";
+import ProgressiveImage from "react-progressive-graceful-image";
 
 const HomeHero = () => {
   return (
@@ -21,7 +24,7 @@ const HomeHero = () => {
       </article>
 
       <article className="img-container" style={{ display: "flex" }}>
-        <img
+        {/* <img
           src={heroBcg}
           alt="main"
           className="main-img"
@@ -34,7 +37,29 @@ const HomeHero = () => {
           className="accent-img"
           width="300px"
           height="300px"
-        />
+        /> */}
+        <ProgressiveImage src={heroBcg} placeholder={heroBcgPlaceholder}>
+          {(src, loading) => (
+            <img
+              alt="Corporate Office"
+              className={`image${loading ? " loading" : " loaded"}`}
+              src={src}
+              width="300px"
+              height="300px"
+            />
+          )}
+        </ProgressiveImage>
+        <ProgressiveImage src={heroBcg2} placeholder={heroBcgPlaceholder2}>
+          {(src, loading) => (
+            <img
+              alt="Corporate Office"
+              className={`image${loading ? " loading" : " loaded"}`}
+              src={src}
+              width="300px"
+              height="300px"
+            />
+          )}
+        </ProgressiveImage>
       </article>
     </section>
   );
