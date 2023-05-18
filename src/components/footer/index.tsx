@@ -49,16 +49,19 @@ const Footer = ({ t }: any) => {
             <Link to="/about">{t("About")}</Link>
           </p>
           <p>
+            <Link to="/products">{t("Products")}</Link>
+          </p>
+          <p>
+            <Link to="/cart">{t("Cart")}</Link>
+          </p>
+          <p>
             <Link to="/contact">{t("Contact")}</Link>
           </p>
           <p>
             <Link to="/terms">{t("Terms")}</Link>
           </p>
           <p>
-            <Link to="/products">{t("Products")}</Link>
-          </p>
-          <p>
-            <Link to="/cart">{t("Cart")}</Link>
+            <Link to="/faq">{t("FAQ")}</Link>
           </p>
           <p>
             {/* if user, then */}

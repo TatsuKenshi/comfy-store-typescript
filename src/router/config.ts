@@ -7,6 +7,7 @@ const Contact = React.lazy(() => import("../pages/contact/index"));
 const SingleProduct = React.lazy(() => import("../pages/single-product/index"));
 const Cart = React.lazy(() => import("../pages/cart/index"));
 const Terms = React.lazy(() => import("../pages/terms/index"));
+const FrequentlyAskedQuestions = React.lazy(() => import("../pages/faq/index"));
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     id: 6,
     path: "terms",
     element: Terms,
+  },
+  {
+    id: 7,
+    path: "faq",
+    element: FrequentlyAskedQuestions,
   },
 ];
 
