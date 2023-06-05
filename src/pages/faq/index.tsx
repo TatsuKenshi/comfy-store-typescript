@@ -20,10 +20,7 @@ const FrequentlyAskedQuestions = () => {
   return (
     <div>
       <div>
-        <PageHero title="Disclaimer" />
-      </div>
-      <div>
-        <h1>Questions</h1>
+        <PageHero title="Questions" />
       </div>
       <div>
         <FaqQuestionsList />

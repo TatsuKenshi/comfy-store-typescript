@@ -21,9 +21,6 @@ const Terms = () => {
         <PageHero title="Disclaimer" />
       </div>
       <div>
-        <h1>Disclaimer</h1>
-      </div>
-      <div>
         <Disclaimer />
       </div>
 
