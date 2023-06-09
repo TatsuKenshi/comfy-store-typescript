@@ -157,20 +157,20 @@ const FaqQuestionsList = () => {
           <div>
             <button
               onClick={() => {
-                if (questions.question4) {
-                  updateQuestions("question4", false);
+                if (questions.question5) {
+                  updateQuestions("question5", false);
                 } else {
-                  updateQuestions("question4", true);
+                  updateQuestions("question5", true);
                 }
               }}
             >
-              {questions.question4 ? <FaChevronDown /> : <FaChevronUp />}
+              {questions.question5 ? <FaChevronDown /> : <FaChevronUp />}
             </button>
           </div>
         </div>
 
         {/* answer div */}
-        {questions.question4 && (
+        {questions.question5 && (
           <div>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
             tempore ipsum ab, mollitia, itaque nesciunt commodi obcaecati eos
@@ -188,20 +188,20 @@ const FaqQuestionsList = () => {
           <div>
             <button
               onClick={() => {
-                if (questions.question4) {
-                  updateQuestions("question4", false);
+                if (questions.question6) {
+                  updateQuestions("question6", false);
                 } else {
-                  updateQuestions("question4", true);
+                  updateQuestions("question6", true);
                 }
               }}
             >
-              {questions.question4 ? <FaChevronDown /> : <FaChevronUp />}
+              {questions.question6 ? <FaChevronDown /> : <FaChevronUp />}
             </button>
           </div>
         </div>
 
         {/* answer div */}
-        {questions.question4 && (
+        {questions.question6 && (
           <div>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
             tempore ipsum ab, mollitia, itaque nesciunt commodi obcaecati eos
