@@ -26,7 +26,7 @@ const FaqQuestionsList = () => {
         {/* question div */}
         <div>
           <div>
-            <p>The question goes here. What is it?</p>
+            <p>The question goes here. What is it??</p>
           </div>
           <div>
             <button
