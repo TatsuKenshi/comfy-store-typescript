@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Footer = ({ t }: any) => {
+  const { user } = useAuth0();
+
   return (
     <footer className="">
       {/* content section */}
@@ -63,10 +66,12 @@ const Footer = ({ t }: any) => {
           <p>
             <Link to="/faq">{t("FAQ")}</Link>
           </p>
-          <p>
-            {/* if user, then */}
-            <Link to="/checkout">{t("Checkout")}</Link>
-          </p>
+          {user ? (
+            <p>
+              {/* if user, then */}
+              <Link to="/checkout">{t("Checkout")}</Link>
+            </p>
+          ) : null}
         </div>
         <div className=""></div>
       </section>
